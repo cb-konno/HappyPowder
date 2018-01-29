@@ -1,46 +1,22 @@
 # README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-ruby 2.5.0
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
+This is a project for training.
 
 ## テーブルスキーマ（モデル名・カラム名・データ型）
 ###### ユーザー(Users)
-| カラム名 | データ型 |
-|:-----------|:------------|
-| ID       | Primary       |
-| mail       | VARCHAR(255)       |
-| password       | VARCHAR(255)       |
-| name       | VARCHAR(255)       |
-| ins_date       | timestamp      |
-| up_date       | timestamp      |
-| is_deleted       | boolean      |
+| カラム名 | データ型 | 備考 |
+|:-----------|:------------|:------------|
+| ID       | Primary       |主キー|
+| mail       | VARCHAR(255)       ||
+| password       | VARCHAR(255)       ||
+| name       | VARCHAR(255)       ||
+| ins_date       | timestamp      ||
+| up_date       | timestamp      ||
+| is_deleted       | boolean      | 1:削除済|
 
 ###### タスク(Tasks)
 | カラム名 | データ型 | 備考 |
 |:-----------|:------------|:------------|
-| ID       | Primary       ||
+| ID       | Primary       |主キー|
 | name       | VARCHAR(255)       ||
 | description       | text       ||
 | priority       | ENUM | 高:'high', 中：'middle', 低：'low'  |
@@ -49,3 +25,17 @@ ruby 2.5.0
 | end_date       | timestamp      ||
 | ins_date       | timestamp      ||
 | up_date       | timestamp      ||
+
+###### ラベルマスタ(Mst_Label)
+| カラム名 | データ型 | 備考 |
+|:-----------|:------------|:------------|
+| ID       | Primary       |主キー|
+| name       | VARCHAR(255)       ||
+| is_deleted       | boolean      | 1:削除済|
+
+######（中間テーブル）タスクラベル(Task_Label)
+| カラム名 | データ型 | 備考 |
+|:-----------|:------------|:------------|
+| ID       | Primary       |主キー|
+| task_id       | integer       |外部キー|
+| label_id       | integer       |外部キー|
