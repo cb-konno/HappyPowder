@@ -33,7 +33,7 @@ This is a project for training.
 | name       | VARCHAR(255)       ||
 | is_deleted       | boolean      | 1:削除済|
 
-######（中間テーブル）タスクラベル(Task_Label) 
+###### （中間テーブル）タスクラベル(Task_Label) 
 | カラム名 | データ型 | 備考 |
 |:-----------|:------------|:------------|
 | ID       | Primary       |主キー|
