@@ -25,9 +25,14 @@ ruby 2.5.0
 * ...
 
 
-##テーブルスキーマ（モデル名・カラム名・データ型）
-
+## テーブルスキーマ（モデル名・カラム名・データ型）
 ###### ユーザー(Users)
 | カラム名 | データ型 |
 |:-----------|------------:|
-| ID       | VARCHAR(255)       |
+| ID       | Primary       |
+| mail       | VARCHAR(255)       |
+| password       | VARCHAR(255)       |
+| name       | VARCHAR(255)       |
+| ins_date       | timestamp      |
+| up_date       | timestamp      |
+| is_deleted       | boolean      |
