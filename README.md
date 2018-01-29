@@ -28,7 +28,7 @@ ruby 2.5.0
 ## テーブルスキーマ（モデル名・カラム名・データ型）
 ###### ユーザー(Users)
 | カラム名 | データ型 |
-|:-----------|------------:|
+|:-----------|:------------|
 | ID       | Primary       |
 | mail       | VARCHAR(255)       |
 | password       | VARCHAR(255)       |
@@ -36,3 +36,16 @@ ruby 2.5.0
 | ins_date       | timestamp      |
 | up_date       | timestamp      |
 | is_deleted       | boolean      |
+
+###### タスク(Tasks)
+| カラム名 | データ型 | 備考 |
+|:-----------|:------------|:------------|
+| ID       | Primary       ||
+| name       | VARCHAR(255)       ||
+| description       | text       ||
+| priority       | ENUM | 高:'high', 中：'middle', 低：'low'  |
+| status       | ENUM       | 未着手：created, 着手：doing, 完了：done|
+| start_date       | timestamp      ||
+| end_date       | timestamp      ||
+| ins_date       | timestamp      ||
+| up_date       | timestamp      ||
