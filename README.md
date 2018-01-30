@@ -19,10 +19,10 @@ This is a project for training.
 | ID         | Primary     | 主キー       |
 | name       | VARCHAR(255)|             |
 | description| text        |             |
-| priority   | ENUM        | 高:high、中：middle、低：low          |
-| status     | ENUM        | 未着手：created、着手：doing、完了：done|
-| started_at | timestamp   |             |
-| ended_at   | timestamp   |             |
+| priority   | ENUM        | high:高、middle：中、low：低          |
+| status     | ENUM        | created：未着手、doing：着手、done：完了|
+| started_at | datetime    |             |
+| ended_at   | datetime    |             |
 | created_at | timestamp   |             |
 | updated_at | timestamp   |             |
 
