@@ -21,8 +21,8 @@ This is a project for training.
 | description| text        |             |
 | priority   | ENUM        | 高:high、中：middle、低：low          |
 | status     | ENUM        | 未着手：created、着手：doing、完了：done|
-| start_at   | timestamp   |             |
-| end_at     | timestamp   |             |
+| started_at | timestamp   |             |
+| ended_at   | timestamp   |             |
 | created_at | timestamp   |             |
 | updated_at | timestamp   |             |
 
