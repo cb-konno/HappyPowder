@@ -1,0 +1,65 @@
+// Place all the styles related to the Tasks controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+h2 {
+  color: #295890;
+}
+
+table {
+    width: 800px;
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 1px 15px;
+    font-size: 12px;
+}
+
+table th {
+    background: #295890;
+    vertical-align: middle;
+    text-align: left;
+    width: 80px;
+    overflow: visible;
+    position: relative;
+    color: #fff;
+    font-weight: normal;
+    font-size: 15px;
+}
+
+table td.menu {
+   background: #f8f8f8;
+   width:100px;
+   padding: 10px;
+}
+
+table td.title {
+   background: #f8f8f8;
+   width:80px;
+   padding-right: 10px;
+   padding-left: 10px;
+}
+
+input {
+  width:180px;
+}
+
+select {
+  width:180px;
+}
+
+textarea {
+  width: 400px;
+  height: 200px;
+}
+
+div.flash{
+  border-radius: 20px;
+  margin:30px;
+}
+
+div.success-message {
+  background: #ccccff;
+  color:#0000aa;
+  padding-left:15px;
+  padding-top:5px;
+  padding-bottom:5px;
+}

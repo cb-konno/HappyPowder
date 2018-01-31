@@ -1,0 +1,35 @@
+<h2>新規作成画面</h2>
+
+<hr>
+<%= form_for :task, url: tasks_path do |f| %>
+  <table>
+    <tr>
+      <td class="title">課題名</td>
+      <td><%= f.text_field :name, placeholder: '課題名を登録' %></td>
+    </tr>
+    <tr>
+      <td class="title">説明</td>
+      <td><%= f.text_area :description, placeholder: '説明' %></td>
+    </tr>
+    <tr>
+      <td class="title">ステータス</td>
+      <td>  <%= select :task, :status, [['未着手', "created"], ['着手', "doing"], ['完了', "done"]] %></td>
+    </tr>
+    <tr>
+      <td class="title">優先度</td>
+      <td><%= select :task, :priority, [['高', "high"], ['中', "middle"], ['低', "low"]] %></td>
+    </tr>
+    <tr>
+      <td class="title">開始日</td>
+      <td><%= date_field(:task, :started_at) %></td>
+    </tr>
+    <tr>
+      <td class="title">終了日</td>
+      <td><%= date_field(:task, :ended_at) %></td>
+    </tr>
+  </table>
+  <%= f.submit %>
+<% end %>
+
+<hr>
+<%= link_to "一覧へ", tasks_path %>

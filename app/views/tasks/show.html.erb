@@ -1,0 +1,49 @@
+<h2>詳細表示画面</h2>
+<% if flash[:success] %>
+  <div class="flash success-message">
+    <%= flash[:success] %>
+  </div>
+<% end %>
+
+<table>
+  <tr>
+    <td class="title">ID</td>
+    <td><%= @task.id %></td>
+  </tr>
+  <tr>
+    <td class="title">課題名</td>
+    <td><%= @task.name %></td>
+  </tr>
+  <tr>
+    <td class="title">説明</td>
+    <td><%= @task.description %></td>
+  </tr>
+  <tr>
+    <td class="title">ステータス</td>
+    <td><%= @task.status %></td>
+  </tr>
+  <tr>
+    <td class="title">優先度</td>
+    <td><%= @task.priority %></td>
+  </tr>
+  <tr>
+    <td class="title">開始日</td>
+    <td><%= @task.started_at %></td>
+  </tr>
+  <tr>
+    <td class="title">終了日</td>
+    <td><%= @task.ended_at %></td>
+  </tr>
+  <tr>
+    <td class="title">作成日時</td>
+    <td><%= @task.created_at %></td>
+  </tr>
+  <tr>
+    <td class="title">更新日時</td>
+    <td><%= @task.updated_at %></td>
+  </tr>
+</table>
+<hr>
+<%= link_to "一覧へ" ,root_path %>
+／<%= link_to "編集", edit_task_path(@task) %>
+／<%= link_to "削除", @task, method: :delete , data: { confirm: 'Are you sure?' } %>
