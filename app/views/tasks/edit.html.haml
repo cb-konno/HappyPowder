@@ -1,0 +1,30 @@
+%h2 編集画面！
+%hr/
+= form_for @task, url: task_path(@task) do |f|
+  %table
+    %tr
+      %td.title ID
+      %td= @task.id
+    %tr
+      %td.title 課題名
+      %td= f.text_field :name, placeholder: '課題名を登録'
+    %tr
+      %td.title 説明
+      %td= f.text_area :description, placeholder: '説明'
+    %tr
+      %td.title ステータス
+      %td
+        = select :task, :status, [['未着手', "created"], ['着手', "doing"], ['完了', "done"]]
+    %tr
+      %td.title 優先度
+      %td= select :task, :priority, [['高', "high"], ['中', "middle"], ['低', "low"]]
+    %tr
+      %td.title 開始日
+      %td= date_field(:task, :started_at)
+    %tr
+      %td.title 終了日
+      %td= date_field(:task, :ended_at)
+  = f.submit
+%hr/
+= link_to "一覧へ" ,root_path
+／#{link_to "削除", @task, method: :delete , data: { confirm: 'Are you sure?' }}

@@ -1,0 +1,37 @@
+%h2 タスク一覧画面
+- if flash[:success]
+  .flash.success-message
+    = flash[:success]
+%table
+  %tr
+    %th ID
+    %th name
+    %th description
+    %th status
+    %th priority
+    %th started_at
+    %th ended_at
+    %th menu
+  - @tasks.each do |task|
+    %tr
+      %td
+        = task.id
+      %td
+        = task.name
+      %td
+        = task.description
+      %td
+        = task.status
+      %td
+        = task.priority
+      %td
+        = task.started_at
+      %td
+        = task.ended_at
+      %td.menu
+        = link_to "詳細", task_path(task)
+        ／#{link_to "編集", edit_task_path(task)}
+        ／#{link_to "削除", task, method: :delete , data: { confirm: 'タスクを削除します。よろしいですか?' }}
+%hr/
+%div
+  = link_to "新規作成", new_task_path
