@@ -1,17 +1,20 @@
 class TasksController < ApplicationController
+
+  before_action :task_find, only: [:show, :edit, :update, :destroy]
+
   def index
     @tasks = Task.all.order(created_at: 'desc')
   end
 
   def show
-    @task = Task.find(params[:id])
   end
 
   def new
+    @task = Task.new
   end
 
   def create
-    @task = Task.new(params.require(:task).permit(:name, :description, :status, :priority, :started_at, :ended_at))
+    @task = Task.new(task_params)
     @task.save
 
     redirect_to tasks_path
@@ -19,12 +22,10 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
   end
 
   def update
-    @task = Task.find(params[:id])
-    if @task.update(params.require(:task).permit(:name, :description, :status, :priority, :started_at, :ended_at))
+    if @task.update(task_params)
       flash[:success] = "Task Updated Success."
       redirect_to task_path @task
     else
@@ -34,10 +35,20 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
     @task.destroy
     flash[:success] = "Task Deleted."
     redirect_to tasks_path
   end
+
+
+  private
+
+    def task_find
+      @task = Task.find(params[:id])
+    end
+
+    def task_params
+      params.require(:task).permit(:name, :description, :status, :priority, :started_at, :ended_at)
+    end
 
 end

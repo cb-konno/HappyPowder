@@ -1,36 +1,34 @@
-%h2 詳細表示画面
-- if flash[:success]
-  .flash.success-message
-    = flash[:success]
+.header
+  = render "layouts/task/header"
+
 %table
   %tr
     %td.title ID
-    %td= @task.id
+    %td.input_disabled= @task.id
   %tr
     %td.title 課題名
-    %td= @task.name
+    %td.input_disabled= @task.name
   %tr
     %td.title 説明
-    %td= @task.description
+    %td.input_disabled= @task.description
   %tr
     %td.title ステータス
-    %td= @task.status
+    %td.input_disabled= @task.status
   %tr
     %td.title 優先度
-    %td= @task.priority
+    %td.input_disabled= @task.priority
   %tr
     %td.title 開始日
-    %td= @task.started_at
+    %td.input_disabled= @task.started_at
   %tr
     %td.title 終了日
-    %td= @task.ended_at
+    %td.input_disabled= @task.ended_at
   %tr
     %td.title 作成日時
-    %td= @task.created_at
+    %td.input_disabled= @task.created_at
   %tr
     %td.title 更新日時
-    %td= @task.updated_at
-%hr/
-= link_to "一覧へ" ,root_path
-／#{link_to "編集", edit_task_path(@task)}
-／#{link_to "削除", @task, method: :delete , data: { confirm: 'Are you sure?' }}
+    %td.input_disabled= @task.updated_at
+
+.footer
+  = render "layouts/task/footer"
