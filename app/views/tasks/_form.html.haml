@@ -1,27 +1,27 @@
 = form_for @task do |f|
-  %table
+  %table#form
     - if params[:action] == 'edit'
       %tr
-        %td.title ID
+        %th.title ID
         %td.input_disabled= @task.id
     %tr
-      %td.title 課題名
+      %th 課題名
       %td= f.text_field :name, placeholder: '課題名を登録'
     %tr
-      %td.title 説明
+      %th 説明
       %td= f.text_area :description, placeholder: '説明'
     %tr
-      %td.title ステータス
+      %th ステータス
       %td
         = f.select :status, [['未着手', 'created'], ['着手', 'doing'], ['完了', 'done']]
     %tr
-      %td.title 優先度
+      %th 優先度
       %td= f.select :priority, [['高', 'high'], ['中', 'middle'], ['低', 'low']]
     %tr
-      %td.title 開始日
+      %th 開始日
       %td= f.date_field(:started_at)
     %tr
-      %td.title 終了日
+      %th 終了日
       %td= f.date_field(:ended_at)
     %tr
       %td{ colspan:2, align: 'center' }

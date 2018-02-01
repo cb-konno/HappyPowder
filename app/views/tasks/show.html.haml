@@ -1,32 +1,32 @@
 = render 'layouts/task/header', page_title: @page_title
 
-%table
+%table#disp
   %tr
-    %td.title ID
-    %td.input_disabled= @task.id
+    %th ID
+    %td= @task.id
   %tr
-    %td.title 課題名
-    %td.input_disabled= @task.name
+    %th 課題名
+    %td= @task.name
   %tr
-    %td.title 説明
-    %td.input_disabled= @task.description
+    %th 説明
+    %td= @task.description
   %tr
-    %td.title ステータス
-    %td.input_disabled= @task.status
+    %th ステータス
+    %td= @task.status
   %tr
-    %td.title 優先度
-    %td.input_disabled= @task.priority
+    %th 優先度
+    %td= @task.priority
   %tr
-    %td.title 開始日
-    %td.input_disabled= @task.started_at
+    %th 開始日
+    %td= @task.started_at
   %tr
-    %td.title 終了日
-    %td.input_disabled= @task.ended_at
+    %th 終了日
+    %td= @task.ended_at
   %tr
-    %td.title 作成日時
-    %td.input_disabled= @task.created_at
+    %th 作成日時
+    %td= @task.created_at
   %tr
-    %td.title 更新日時
-    %td.input_disabled= @task.updated_at
+    %th 更新日時
+    %td= @task.updated_at
 
 = render 'layouts/task/footer', task: @task

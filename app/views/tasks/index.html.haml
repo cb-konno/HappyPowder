@@ -1,6 +1,6 @@
 = render 'layouts/task/header', page_title: @page_title
 
-%table
+%table#index
   %tr
     %td.add{ colspan: 8, align: 'right' }
       = link_to '新規作成', new_task_path
@@ -15,21 +15,21 @@
     %th menu
   - @tasks.each do |task|
     %tr
-      %td.row
+      %td
         = task.id
-      %td.row
+      %td
         = task.name
-      %td.row
+      %td
         = task.description
-      %td.row
+      %td
         = task.status
-      %td.row
+      %td
         = task.priority
-      %td.row
+      %td
         = task.started_at
-      %td.row
+      %td
         = task.ended_at
-      %td.row.menu
+      %td.menu
         = link_to '詳細', task_path(task)
         ／#{link_to '編集', edit_task_path(task)}
         ／#{link_to '削除', task, method: :delete , data: { confirm: 'Are you sure' }}
