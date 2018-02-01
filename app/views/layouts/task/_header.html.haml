@@ -1,15 +1,6 @@
-- if params[:action] == 'index'
-  - @title = 'タスク一覧'
-- if params[:action] == 'edit'
-  - @title = 'タスク編集'
-- if params[:action] == 'new'
-  - @title = 'タスク新規作成'
-- if params[:action] == 'show'
-  - @title = 'タスク詳細'
-
 %header
   %h2
-    = @title
+    = page_title
   - if flash[:success]
     .flash.success-message
       = flash[:success]
