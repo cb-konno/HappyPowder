@@ -14,6 +14,10 @@ gem 'rails', '~> 5.1.4'
 #gem 'sqlite3'
 gem 'pg', '~> 0.18'
 
+gem 'haml-rails'
+
+gem 'erb2haml'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets

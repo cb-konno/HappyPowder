@@ -1,0 +1,37 @@
+= render 'layouts/task/header', page_title: @page_title
+
+%table#index
+  %tr
+    %td.add{ colspan: 8, align: 'right' }
+      = link_to '新規作成', new_task_path
+  %tr
+    %th ID
+    %th name
+    %th description
+    %th status
+    %th priority
+    %th started_at
+    %th ended_at
+    %th menu
+  - @tasks.each do |task|
+    %tr
+      %td
+        = task.id
+      %td
+        = task.name
+      %td
+        = task.description
+      %td
+        = task.status
+      %td
+        = task.priority
+      %td
+        = task.started_at
+      %td
+        = task.ended_at
+      %td.menu
+        = link_to '詳細', task_path(task)
+        ／#{link_to '編集', edit_task_path(task)}
+        ／#{link_to '削除', task, method: :delete , data: { confirm: 'Are you sure' }}
+
+= render 'layouts/task/footer'

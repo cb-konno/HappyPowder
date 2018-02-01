@@ -1,0 +1,32 @@
+= render 'layouts/task/header', page_title: @page_title
+
+%table#disp
+  %tr
+    %th ID
+    %td= @task.id
+  %tr
+    %th 課題名
+    %td= @task.name
+  %tr
+    %th 説明
+    %td= @task.description
+  %tr
+    %th ステータス
+    %td= @task.status
+  %tr
+    %th 優先度
+    %td= @task.priority
+  %tr
+    %th 開始日
+    %td= @task.started_at
+  %tr
+    %th 終了日
+    %td= @task.ended_at
+  %tr
+    %th 作成日時
+    %td= @task.created_at
+  %tr
+    %th 更新日時
+    %td= @task.updated_at
+
+= render 'layouts/task/footer', task: @task
