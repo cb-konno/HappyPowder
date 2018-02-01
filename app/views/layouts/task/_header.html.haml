@@ -7,9 +7,9 @@
 - if params[:action] == 'show'
   - @title = 'タスク詳細'
 
-%h2
-  = @title
-%div.header
+%header
+  %h2
+    = @title
   - if flash[:success]
     .flash.success-message
       = flash[:success]

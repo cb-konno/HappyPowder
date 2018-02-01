@@ -1,5 +1,4 @@
-.header
-  = render "layouts/task/header"
+= render 'layouts/task/header'
 
 %table
   %tr
@@ -30,5 +29,4 @@
     %td.title 更新日時
     %td.input_disabled= @task.updated_at
 
-.footer
-  = render "layouts/task/footer"
+= render 'layouts/task/footer', task: @task

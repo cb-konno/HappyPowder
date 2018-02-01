@@ -18,7 +18,7 @@ class TasksController < ApplicationController
     @task.save
 
     redirect_to tasks_path
-    flash[:success] = "New Task Created."
+    flash[:success] = 'New Task Created.'
   end
 
   def edit
@@ -26,17 +26,17 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      flash[:success] = "Task Updated Success."
+      flash[:success] = 'Task Updated Success.'
       redirect_to task_path @task
     else
-      flash[:failed] = "Task Updated Failed."
+      flash[:failed] = 'Task Updated Failed.'
       render :edit
     end
   end
 
   def destroy
     @task.destroy
-    flash[:success] = "Task Deleted."
+    flash[:success] = 'Task Deleted.'
     redirect_to tasks_path
   end
 

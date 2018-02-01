@@ -1,8 +1,5 @@
-.header
-  = render "layouts/task/header"
+= render 'layouts/task/header'
 
-.form
-  = render "tasks/form"
+= render 'tasks/form', task: @task
 
-.footer
-  = render "layouts/task/footer"
+= render 'layouts/task/footer', task: @task

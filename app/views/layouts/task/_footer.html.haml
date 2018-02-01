@@ -1,8 +1,10 @@
-%hr
-%div.footer
-  = link_to "一覧へ", tasks_path
+%footer
+  %hr
+
+  = link_to '一覧へ', tasks_path
+
   - if params[:action] == 'show'
-    ／#{link_to "編集", edit_task_path(@task)}
+    ／#{link_to '編集', edit_task_path(task)}
 
   - if params[:action] == 'show' || params[:action] == 'edit'
-    ／#{link_to "削除", @task, method: :delete , data: { confirm: 'Are you sure?' }}
+    ／#{link_to '削除', task, method: :delete , data: { confirm: 'Are you sure?' }}

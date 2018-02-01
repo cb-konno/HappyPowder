@@ -13,10 +13,10 @@
     %tr
       %td.title ステータス
       %td
-        = f.select :status, [['未着手', "created"], ['着手', "doing"], ['完了', "done"]]
+        = f.select :status, [['未着手', 'created'], ['着手', 'doing'], ['完了', 'done']]
     %tr
       %td.title 優先度
-      %td= f.select :priority, [['高', "high"], ['中', "middle"], ['低', "low"]]
+      %td= f.select :priority, [['高', 'high'], ['中', 'middle'], ['低', 'low']]
     %tr
       %td.title 開始日
       %td= f.date_field(:started_at)
@@ -24,5 +24,5 @@
       %td.title 終了日
       %td= f.date_field(:ended_at)
     %tr
-      %td{:colspan => '2', :align => 'center'}
+      %td{ colspan:2, align: 'center' }
         = f.submit
