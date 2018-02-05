@@ -1,5 +1,6 @@
+# TaskController
+#
 class TasksController < ApplicationController
-
   before_action :task_find, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -54,5 +55,4 @@ class TasksController < ApplicationController
     def task_params
       params.require(:task).permit(:name, :description, :status, :priority, :started_at, :ended_at)
     end
-
 end
