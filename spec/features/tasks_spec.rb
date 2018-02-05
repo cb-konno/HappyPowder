@@ -16,12 +16,16 @@ RSpec.feature 'リンクのテスト', type: :feature do
 
 end
 
-RSpec.feature 'タスクの登録・更新・削除のテスト', type: :feature do
+RSpec.feature 'タスクの新規作成テスト', type: :feature do
 
   it 'タスクの登録をテストします' do
     visit new_task_path
     fill_in 'task[name]', with: 'テストで追加する課題の名前'
     fill_in 'task[description]', with: '課題の説明文を長々と…'
+    select '未着手', from: 'task[status]'
+    select '中', from: 'task[priority]'
+    fill_in 'task[started_at]', with: '2018-02-01'
+    fill_in 'task[ended_at]', with: '2018-02-28'
     click_button 'Create Task'
     expect(page).to have_content 'New Task Created.'
   end
