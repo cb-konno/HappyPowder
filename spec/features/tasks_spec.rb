@@ -31,3 +31,75 @@ RSpec.feature 'タスクの新規作成テスト', type: :feature do
   end
 
 end
+
+RSpec.feature 'タスクの詳細画面表示テスト', type: :feature do
+  background do
+    Task.create!(id: 1, name: 'パン工場に行く', description: 'アンパンマンの顔を焼く', status: 'created', priority: 'high')
+  end
+  scenario 'タスク詳細画面を表示する' do
+    task = Task.find(1)
+    visit task_path(task)
+
+    header = find('header')
+    expect(header).to have_content 'タスク詳細'
+    table = find('table#disp')
+    expect(table).to have_content task.id
+    expect(table).to have_content task.name
+    expect(table).to have_content task.description
+    expect(table).to have_content task.status
+    expect(table).to have_content task.priority
+  end
+
+end
+
+RSpec.feature 'タスクを更新するテスト', type: :feature do
+
+  background do
+    Task.create!(id: 1, name: '更新前のタスク名', description: '更新する前のタスクの説明文', status: 'created', priority: 'middle')
+  end
+
+  scenario 'タスクの更新画面を表示する' do
+    task = Task.find(1)
+    visit edit_task_path(task)
+
+    header = find('header')
+    expect(header).to have_content 'タスク編集'
+    form = find('table#form')
+    expect(form).to have_content 1
+    input = find('input#task_name')
+    expect(input.value).to eq task.name
+    textarea = find('textarea#task_description')
+    expect(textarea.value).to eq task.description
+    select = find('select#task_status')
+    expect(select.value).to eq task.status
+    select = find('select#task_priority')
+    expect(select.value).to eq task.priority
+  end
+
+  scenario '更新画面からタスクを更新する' do
+    task = Task.find(1)
+    visit edit_task_path(task)
+
+    fill_in 'task[name]', with: '更新後のタスク'
+    fill_in 'task[description]', with: '更新した後のタスクの説明文'
+    select '着手', from: 'task[status]'
+    select '低', from: 'task[priority]'
+    fill_in 'task[started_at]', with: '2018-02-01'
+    fill_in 'task[ended_at]', with: '2018-02-28'
+    click_button 'Update Task'
+
+    expect(page).to have_content 'Task Updated Success.'
+
+    header = find('header')
+    expect(header).to have_content 'タスク詳細'
+    table = find('table#disp')
+    expect(table).to have_content '更新後のタスク'
+    expect(table).to have_content '更新した後のタスクの説明文'
+    expect(table).to have_content 'doing'
+    expect(table).to have_content 'low'
+    expect(table).to have_content '2018-02-01 00:00:00 UTC'
+    expect(table).to have_content '2018-02-28 00:00:00 UTC'
+
+  end
+
+end

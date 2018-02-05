@@ -26,6 +26,7 @@ class TasksController < ApplicationController
   end
 
   def edit
+    @page_title = 'タスク編集'
   end
 
   def update
