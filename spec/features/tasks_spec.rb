@@ -4,14 +4,16 @@ RSpec.feature 'リンクのテスト', type: :feature do
 
   it 'トップページから新規作成ページに遷移する' do
     visit root_path
-    click_link '新規作成'
-    expect(page).to have_content 'タスク新規作成'
+    click_link t('link_to_new')
+    header = find('header')
+    expect(header).to have_content t('title_new', title: Task.model_name.human)
   end
 
   it '新規作成ページからトップページに遷移する' do
     visit new_task_path
-    click_link '一覧'
-    expect(page).to have_content 'タスク一覧'
+    click_link t('link_to_index')
+    header = find('header')
+    expect(header).to have_content t('title_index', title: Task.model_name.human)
   end
 
 end
@@ -22,14 +24,14 @@ RSpec.feature 'タスクの新規作成テスト', type: :feature do
     visit new_task_path
     fill_in 'task[name]', with: 'テストで追加する課題の名前'
     fill_in 'task[description]', with: '課題の説明文を長々と…'
-    select '未着手', from: 'task[status]'
-    select '中', from: 'task[priority]'
+    select t('task.status.created'), from: 'task[status]'
+    select t('task.priority.middle'), from: 'task[priority]'
     fill_in 'task[started_at]', with: '2018-02-01'
     fill_in 'task[ended_at]', with: '2018-02-28'
-    click_button '新規作成'
-    expect(page).to have_content 'タスクを作成しました'
+    click_button t('submit.new')
+    expect(page).to have_content t('flash.create_success', target: Task.model_name.human)
     header = find('header')
-    expect(header).to have_content 'タスク一覧'
+    expect(header).to have_content t('title_index', title: Task.model_name.human)
     table = find('table#index')
     expect(table).to have_content 'テストで追加する課題の名前'
     expect(table).to have_content '課題の説明文を長々と…'
@@ -47,7 +49,7 @@ RSpec.feature 'タスクの詳細画面表示テスト', type: :feature do
     visit task_path(task)
 
     header = find('header')
-    expect(header).to have_content 'タスク詳細'
+    expect(header).to have_content t('title_show', title: Task.model_name.human)
     table = find('table#disp')
     expect(table).to have_content task.id
     expect(table).to have_content task.name
@@ -69,7 +71,7 @@ RSpec.feature 'タスクを更新するテスト', type: :feature do
     visit edit_task_path(task)
 
     header = find('header')
-    expect(header).to have_content 'タスク編集'
+    expect(header).to have_content t('title_edit', title: Task.model_name.human)
     form = find('table#form')
     expect(form).to have_content 1
     input = find('input#task_name')
@@ -88,16 +90,16 @@ RSpec.feature 'タスクを更新するテスト', type: :feature do
 
     fill_in 'task[name]', with: '更新後のタスク'
     fill_in 'task[description]', with: '更新した後のタスクの説明文'
-    select '着手', from: 'task[status]'
-    select '低', from: 'task[priority]'
+    select t('task.status.doing'), from: 'task[status]'
+    select t('task.priority.low'), from: 'task[priority]'
     fill_in 'task[started_at]', with: '2018-02-01'
     fill_in 'task[ended_at]', with: '2018-02-28'
-    click_button '更新'
+    click_button t('submit.edit')
 
-    expect(page).to have_content 'タスクを更新しました'
+    expect(page).to have_content t('flash.update_success', target: Task.model_name.human)
 
     header = find('header')
-    expect(header).to have_content 'タスク詳細'
+    expect(header).to have_content t('title_show', title: Task.model_name.human)
     table = find('table#disp')
     expect(table).to have_content '更新後のタスク'
     expect(table).to have_content '更新した後のタスクの説明文'
@@ -119,14 +121,14 @@ RSpec.feature 'タスクを削除するテスト', type: :feature, js: true do
 
   it 'タスクを削除する' do
     header = find('header')
-    expect(header).to have_content 'タスク詳細'
+    expect(header).to have_content t('title_show', title: Task.model_name.human)
     table = find('table#disp')
     expect(table).to have_content '削除するタスク名'
     expect(table).to have_content '削除するタスクの説明文'
 
-    accept_confirm { click_link '削除' }
+    accept_confirm { click_link t('link_to_delete') }
     header = find('header')
-    expect(header).to have_content 'タスク一覧'
+    expect(header).to have_content t('title_index', title: Task.model_name.human)
     table = find('table#index')
     expect(table).not_to have_content '削除するタスク名'
     expect(table).not_to have_content '削除するタスクの説明文'
