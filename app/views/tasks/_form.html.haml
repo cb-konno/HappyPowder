@@ -8,20 +8,20 @@
       %th= f.label :name
       %td= f.text_field :name, placeholder: '課題名を登録'
     %tr
-      %th 説明
+      %th= f.label :description
       %td= f.text_area :description, placeholder: '説明'
     %tr
-      %th ステータス
+      %th= f.label :status
       %td
         = f.select :status, [['未着手', 'created'], ['着手', 'doing'], ['完了', 'done']]
     %tr
-      %th 優先度
+      %th= f.label :priority
       %td= f.select :priority, [['高', 'high'], ['中', 'middle'], ['低', 'low']]
     %tr
-      %th 開始日
+      %th= f.label :started_at
       %td= f.date_field(:started_at)
     %tr
-      %th 終了日
+      %th= f.label :ended_at
       %td= f.date_field(:ended_at)
     %tr
       %td{ colspan:2, align: 'center' }

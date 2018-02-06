@@ -7,4 +7,4 @@
     ／#{link_to t(:link_to_edit), edit_task_path(task)}
 
   - if params[:action] == 'show' || params[:action] == 'edit'
-    ／#{link_to t(:link_to_delete), task, method: :delete , data: { confirm: 'Are you sure?' }}
+    ／#{link_to t(:link_to_delete), task, method: :delete , data: { confirm: t('confirm.delete') }}
