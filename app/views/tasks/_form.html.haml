@@ -5,7 +5,7 @@
         %th.title ID
         %td.input_disabled= @task.id
     %tr
-      %th 課題名
+      %th= f.label :name
       %td= f.text_field :name, placeholder: '課題名を登録'
     %tr
       %th 説明

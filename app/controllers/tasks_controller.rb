@@ -5,16 +5,16 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all.order(created_at: 'desc')
-    @page_title = 'タスク一覧'
+    @page_title = t('title_index', title: t(:task))
   end
 
   def show
-    @page_title = 'タスク詳細'
+    @page_title = t('title_show', title: t(:task))
   end
 
   def new
     @task = Task.new
-    @page_title = 'タスク新規作成'
+    @page_title = t('title_new', title: t(:task))
   end
 
   def create
@@ -37,7 +37,7 @@ class TasksController < ApplicationController
       flash[:failed] = 'Task Updated Failed.'
       render :edit
     end
-    @page_title = 'タスク編集'
+    @page_title = t('title_edit', title: t(:task))
   end
 
   def destroy
