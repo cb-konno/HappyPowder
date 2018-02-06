@@ -30,8 +30,6 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 ja:
-  task: 'タスク'
-
   link_to_index: '一覧'
   link_to_new: '新規作成'
   link_to_show: '詳細'
@@ -45,15 +43,29 @@ ja:
   title_delete: '%{title}削除'
 
   flash:
-    create_success: '%{target}の作成に成功しました'
-    update_success: '%{target}の更新に成功しました'
-    detroy_success: '%{target}の削除に成功しました'
+    create_success: '%{target}を作成しました'
+    update_success: '%{target}を更新しました'
+    destroy_success: '%{target}を削除しました'
     create_failed: '%{target}の作成に失敗しました'
     update_failed: '%{target}の更新に失敗しました'
-    detroy_failed: '%{target}の削除に失敗しました'
+    destroy_failed: '%{target}の削除に失敗しました'
 
   confirm:
-    delete: '%{name}を削除します。よろしいですか？'
+    delete: '%{target}を削除します。よろしいですか？'
+
+  submit:
+    new: '新規作成'
+    edit: '更新'
+
+  task:
+    status:
+      created: '未着手'
+      doing: '着手'
+      done: '完了'
+    priority:
+      high: '高'
+      middle: '中'
+      low: '低'
 
   activerecord:
     models:
@@ -67,6 +79,6 @@ ja:
         priority: '優先度'
         started_at: '開始日'
         ended_at: '終了日'
-        menu: '操作'
+        action: '操作'
         created_at: '作成日時'
         updated_at: '更新日時'

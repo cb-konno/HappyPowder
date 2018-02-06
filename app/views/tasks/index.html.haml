@@ -20,7 +20,7 @@
     %th
       = Task.human_attribute_name :ended_at
     %th
-      = Task.human_attribute_name :menu
+      = Task.human_attribute_name :action
   - @tasks.each do |task|
     %tr
       %td
@@ -40,6 +40,6 @@
       %td.menu
         = link_to t(:link_to_show), task_path(task)
         ／#{link_to t(:link_to_edit), edit_task_path(task)}
-        ／#{link_to t(:link_to_delete), task, method: :delete , data: { confirm: t('confirm.delete') }}
+        ／#{link_to t(:link_to_delete), task, method: :delete , data: { confirm: t('confirm.delete', target: Task.model_name.human) }}
 
 = render 'layouts/task/footer'

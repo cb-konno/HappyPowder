@@ -2,21 +2,21 @@
   %table#form
     - if params[:action] == 'edit'
       %tr
-        %th.title ID
-        %td.input_disabled= @task.id
+        %th.title=f.label :id
+        %td.input_disabled= task.id
     %tr
       %th= f.label :name
-      %td= f.text_field :name, placeholder: '課題名を登録'
+      %td= f.text_field :name
     %tr
       %th= f.label :description
-      %td= f.text_area :description, placeholder: '説明'
+      %td= f.text_area :description
     %tr
       %th= f.label :status
       %td
-        = f.select :status, [['未着手', 'created'], ['着手', 'doing'], ['完了', 'done']]
+        = f.select :status, [[t('task.status.created'), 'created'], [t('task.status.doing'), 'doing'], [t('task.status.done'), 'done']]
     %tr
       %th= f.label :priority
-      %td= f.select :priority, [['高', 'high'], ['中', 'middle'], ['低', 'low']]
+      %td= f.select :priority, [[t('task.priority.high'), 'high'], [t('task.priority.middle'), 'middle'], [t('task.priority.low'), 'low']]
     %tr
       %th= f.label :started_at
       %td= f.date_field(:started_at)
@@ -24,5 +24,9 @@
       %th= f.label :ended_at
       %td= f.date_field(:ended_at)
     %tr
+    - if params[:action] == 'edit'
       %td{ colspan:2, align: 'center' }
-        = f.submit
+        = f.submit t('submit.edit')
+    - else
+      %td{ colspan:2, align: 'center' }
+        = f.submit t('submit.new')
