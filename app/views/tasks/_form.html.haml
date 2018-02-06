@@ -2,7 +2,7 @@
   %table#form
     - if params[:action] == 'edit'
       %tr
-        %th.title=f.label :id
+        %th.title= f.label :id
         %td.input_disabled= task.id
     %tr
       %th= f.label :name
