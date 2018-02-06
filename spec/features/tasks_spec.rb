@@ -26,8 +26,8 @@ RSpec.feature 'タスクの新規作成テスト', type: :feature do
     select '中', from: 'task[priority]'
     fill_in 'task[started_at]', with: '2018-02-01'
     fill_in 'task[ended_at]', with: '2018-02-28'
-    click_button 'Create Task'
-    expect(page).to have_content 'New Task Created.'
+    click_button '新規作成'
+    expect(page).to have_content 'タスクを作成しました'
     header = find('header')
     expect(header).to have_content 'タスク一覧'
     table = find('table#index')
@@ -92,9 +92,9 @@ RSpec.feature 'タスクを更新するテスト', type: :feature do
     select '低', from: 'task[priority]'
     fill_in 'task[started_at]', with: '2018-02-01'
     fill_in 'task[ended_at]', with: '2018-02-28'
-    click_button 'Update Task'
+    click_button '更新'
 
-    expect(page).to have_content 'Task Updated Success.'
+    expect(page).to have_content 'タスクを更新しました'
 
     header = find('header')
     expect(header).to have_content 'タスク詳細'
