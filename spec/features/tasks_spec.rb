@@ -28,6 +28,12 @@ RSpec.feature 'タスクの新規作成テスト', type: :feature do
     fill_in 'task[ended_at]', with: '2018-02-28'
     click_button 'Create Task'
     expect(page).to have_content 'New Task Created.'
+    header = find('header')
+    expect(header).to have_content 'タスク一覧'
+    table = find('table#index')
+    expect(table).to have_content 'テストで追加する課題の名前'
+    expect(table).to have_content '課題の説明文を長々と…'
+
   end
 
 end
