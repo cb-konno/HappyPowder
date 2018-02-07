@@ -16,9 +16,9 @@
     %th
       = Task.human_attribute_name :priority
     %th
-      = Task.human_attribute_name :started_at
+      = Task.human_attribute_name :started_on
     %th
-      = Task.human_attribute_name :ended_at
+      = Task.human_attribute_name :ended_on
     %th
       = Task.human_attribute_name :action
   - @tasks.each do |task|
@@ -34,9 +34,9 @@
       %td
         = task.priority
       %td
-        = task.started_at.to_s()
+        = task.started_on
       %td
-        = task.ended_at
+        = task.ended_on
       %td.menu
         = link_to t(:link_to_show), task_path(task)
         ／

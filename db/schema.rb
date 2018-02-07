@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 20180207074625) do
     t.text "description"
     t.integer "priority"
     t.integer "status"
-    t.date "started_at"
-    t.date "ended_at"
+    t.date "started_on"
+    t.date "ended_on"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

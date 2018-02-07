@@ -17,11 +17,11 @@
     %th= Task.human_attribute_name :priority
     %td= @task.priority
   %tr
-    %th= Task.human_attribute_name :started_at
-    %td= @task.started_at
+    %th= Task.human_attribute_name :started_on
+    %td= @task.started_on
   %tr
-    %th= Task.human_attribute_name :ended_at
-    %td= @task.ended_at
+    %th= Task.human_attribute_name :ended_on
+    %td= @task.ended_on
   %tr
     %th= Task.human_attribute_name :created_at
     %td= @task.created_at
