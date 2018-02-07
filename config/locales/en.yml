@@ -30,4 +30,21 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  task: 'task'
+
+  link_to_index: 'index'
+  link_to_new: 'new'
+  link_to_show: 'show'
+  link_to_edit: 'edit'
+  link_to_delete: 'delete'
+
+
+  title_index: 'index %{title}'
+  title_new: 'new %{title}'
+  title_show: 'show %{title}'
+  title_edit: 'edit %{title}'
+  title_delete: 'delete %{title}'
+
+  message_created: '%{target} created.'
+  message_updated: '%{target} updated.'
+  message_destroy: '%{target} deleted.'

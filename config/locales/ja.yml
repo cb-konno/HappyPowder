@@ -1,0 +1,84 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# The following keys must be escaped otherwise they will not be retrieved by
+# the default I18n backend:
+#
+# true, false, on, off, yes, no
+#
+# Instead, surround them with single quotes.
+#
+# en:
+#   'true': 'foo'
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+ja:
+  link_to_index: '一覧'
+  link_to_new: '新規作成'
+  link_to_show: '詳細'
+  link_to_edit: '編集'
+  link_to_delete: '削除'
+
+  title_index: '%{title}一覧'
+  title_new: '%{title}新規作成'
+  title_show: '%{title}詳細'
+  title_edit: '%{title}編集'
+  title_delete: '%{title}削除'
+
+  flash:
+    create_success: '%{target}を作成しました'
+    update_success: '%{target}を更新しました'
+    destroy_success: '%{target}を削除しました'
+    create_failed: '%{target}の作成に失敗しました'
+    update_failed: '%{target}の更新に失敗しました'
+    destroy_failed: '%{target}の削除に失敗しました'
+
+  confirm:
+    delete: '%{target}を削除します。よろしいですか？'
+
+  submit:
+    new: '新規作成'
+    edit: '更新'
+
+  task:
+    status:
+      created: '未着手'
+      doing: '着手'
+      done: '完了'
+    priority:
+      high: '高'
+      middle: '中'
+      low: '低'
+
+  activerecord:
+    models:
+      task: 'タスク'
+    attributes:
+      task:
+        id: 'ID'
+        name: 'タスク名'
+        description: '説明'
+        status: 'ステータス'
+        priority: '優先度'
+        started_at: '開始日'
+        ended_at: '終了日'
+        action: '操作'
+        created_at: '作成日時'
+        updated_at: '更新日時'

@@ -5,16 +5,16 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all.order(created_at: 'desc')
-    @page_title = 'タスク一覧'
+    @page_title = t('title_index', title: Task.model_name.human)
   end
 
   def show
-    @page_title = 'タスク詳細'
+    @page_title = t('title_show', title: Task.model_name.human)
   end
 
   def new
     @task = Task.new
-    @page_title = 'タスク新規作成'
+    @page_title = t('title_new', title: Task.model_name.human)
   end
 
   def create
@@ -22,27 +22,27 @@ class TasksController < ApplicationController
     @task.save
 
     redirect_to tasks_path
-    flash[:success] = 'New Task Created.'
+    flash[:success] = t('flash.create_success', target: Task.model_name.human)
   end
 
   def edit
-    @page_title = 'タスク編集'
+    @page_title = t('title_edit', title: Task.model_name.human)
   end
 
   def update
     if @task.update(task_params)
-      flash[:success] = 'Task Updated Success.'
+      flash[:success] = t('flash.update_success', target: Task.model_name.human)
       redirect_to task_path @task
     else
-      flash[:failed] = 'Task Updated Failed.'
+      flash[:failed] = t('flash.update_failed', target: Task.model_name.human)
       render :edit
     end
-    @page_title = 'タスク編集'
+    @page_title = t('title_edit', title: Task.model_name.human)
   end
 
   def destroy
     @task.destroy
-    flash[:success] = 'Task Deleted.'
+    flash[:success] = t('flash.destroy_success', target: Task.model_name.human)
     redirect_to tasks_path
   end
 

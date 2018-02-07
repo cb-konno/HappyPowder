@@ -2,31 +2,31 @@
 
 %table#disp
   %tr
-    %th ID
+    %th= Task.human_attribute_name :id
     %td= @task.id
   %tr
-    %th 課題名
+    %th= Task.human_attribute_name :name
     %td= @task.name
   %tr
-    %th 説明
+    %th= Task.human_attribute_name :description
     %td= @task.description
   %tr
-    %th ステータス
+    %th= Task.human_attribute_name :status
     %td= @task.status
   %tr
-    %th 優先度
+    %th= Task.human_attribute_name :priority
     %td= @task.priority
   %tr
-    %th 開始日
+    %th= Task.human_attribute_name :started_at
     %td= @task.started_at
   %tr
-    %th 終了日
+    %th= Task.human_attribute_name :ended_at
     %td= @task.ended_at
   %tr
-    %th 作成日時
+    %th= Task.human_attribute_name :created_at
     %td= @task.created_at
   %tr
-    %th 更新日時
+    %th= Task.human_attribute_name :updated_at
     %td= @task.updated_at
 
 = render 'layouts/task/footer', task: @task
