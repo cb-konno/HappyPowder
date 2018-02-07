@@ -26,8 +26,8 @@ RSpec.feature 'タスクの新規作成テスト', type: :feature do
     fill_in 'task[description]', with: '課題の説明文を長々と…'
     select t('task.status.created'), from: 'task[status]'
     select t('task.priority.middle'), from: 'task[priority]'
-    fill_in 'task[started_at]', with: '2018-02-01'
-    fill_in 'task[ended_at]', with: '2018-02-28'
+    fill_in 'task[started_on]', with: '2018-02-01'
+    fill_in 'task[ended_on]', with: '2018-02-28'
     click_button t('submit.new')
     expect(page).to have_content t('flash.create_success', target: Task.model_name.human)
     header = find('header')
@@ -92,8 +92,8 @@ RSpec.feature 'タスクを更新するテスト', type: :feature do
     fill_in 'task[description]', with: '更新した後のタスクの説明文'
     select t('task.status.doing'), from: 'task[status]'
     select t('task.priority.low'), from: 'task[priority]'
-    fill_in 'task[started_at]', with: '2018-02-01'
-    fill_in 'task[ended_at]', with: '2018-02-28'
+    fill_in 'task[started_on]', with: '2018-02-01'
+    fill_in 'task[ended_on]', with: '2018-02-28'
     click_button t('submit.edit')
 
     expect(page).to have_content t('flash.update_success', target: Task.model_name.human)

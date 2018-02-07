@@ -18,11 +18,11 @@
       %th= f.label :priority
       %td= f.select :priority, [[t('task.priority.high'), 'high'], [t('task.priority.middle'), 'middle'], [t('task.priority.low'), 'low']]
     %tr
-      %th= f.label :started_at
-      %td= f.date_field(:started_at)
+      %th= f.label :started_on
+      %td= f.date_field(:started_on)
     %tr
-      %th= f.label :ended_at
-      %td= f.date_field(:ended_at)
+      %th= f.label :ended_on
+      %td= f.date_field(:ended_on)
     %tr
     - if params[:action] == 'edit'
       %td{ colspan:2, align: 'center' }

@@ -7,8 +7,8 @@
 #  description  :text
 #  priority     :enum
 #  status       :enum
-#  start_at     :datetime
-#  ended_at     :datetime
+#  start_on     :date
+#  ended_on     :datet
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #
