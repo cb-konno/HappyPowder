@@ -135,3 +135,27 @@ RSpec.feature 'タスクを削除するテスト', type: :feature, js: true do
   end
 
 end
+
+RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
+  background do
+    Task.create!(id: 1, name: '明治のタスク', description: '最古のタスク', status: 'done', priority: 'low', created_at: '1900-01-01 00:51:00', updated_at: '2017-11-01 03:34:50')
+    Task.create!(id: 2, name: '昭和のタスク', description: '中間のタスク', status: 'created', priority: 'high', created_at: '1982-06-09 12:00:00', updated_at: '2016-12-01 09:21:45')
+    Task.create!(id: 3, name: '平成のタスク', description: '最新のタスク', status: 'doing', priority: 'middle', created_at: '2010-12-12 00:15:33', updated_at: '2018-02-01 23:43:20')
+  end
+
+  it '作成日時の降順で表示する' do
+    visit tasks_path()
+
+    header = find('header')
+    expect(header).to have_content t('title_index', title: Task.model_name.human)
+    tr = find(:xpath, '//*[@id="index"]/tbody/tr[3]')
+    expect(tr).to have_content '平成のタスク'
+    tr = find(:xpath, '//*[@id="index"]/tbody/tr[4]')
+    expect(tr).to have_content '昭和のタスク'
+    tr = find(:xpath, '//*[@id="index"]/tbody/tr[5]')
+    expect(tr).to have_content '明治のタスク'
+
+  end
+
+
+end
