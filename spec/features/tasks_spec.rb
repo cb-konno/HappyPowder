@@ -1,4 +1,5 @@
-require 'rails_helper'
+#require 'rails_helper'
+require 'features_helper'
 
 RSpec.feature 'リンクのテスト', type: :feature do
 
@@ -148,10 +149,11 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
 
     header = find('header')
     expect(header).to have_content t('title_index', title: Task.model_name.human)
-    expect(page.find('table').all('tr')[2]).to have_content '平成のタスク'
-    expect(page.find('table').all('tr')[3]).to have_content '昭和のタスク'
-    expect(page.find('table').all('tr')[4]).to have_content '明治のタスク'
-
+    data = parse_data(included_th: false)
+    expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4]] }).to eq [
+      ['3', '平成のタスク', '最新のタスク', 'doing', 'middle'],
+      ['2', '昭和のタスク', '中間のタスク', 'created', 'high'],
+      ['1', '明治のタスク', '最古のタスク', 'done', 'low']]
   end
 
 
