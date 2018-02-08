@@ -148,12 +148,9 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
 
     header = find('header')
     expect(header).to have_content t('title_index', title: Task.model_name.human)
-    tr = find(:xpath, '//*[@id="index"]/tbody/tr[3]')
-    expect(tr).to have_content '平成のタスク'
-    tr = find(:xpath, '//*[@id="index"]/tbody/tr[4]')
-    expect(tr).to have_content '昭和のタスク'
-    tr = find(:xpath, '//*[@id="index"]/tbody/tr[5]')
-    expect(tr).to have_content '明治のタスク'
+    expect(page.find('table').all('tr')[2]).to have_content '平成のタスク'
+    expect(page.find('table').all('tr')[3]).to have_content '昭和のタスク'
+    expect(page.find('table').all('tr')[4]).to have_content '明治のタスク'
 
   end
 
