@@ -1,3 +1,11 @@
+- if task.errors.any?
+  .errors
+    %h3= t('errors.messages.count', count: task.errors.count)
+    .messages
+      %ul
+        - task.errors.full_messages.each do |message|
+          %li= message
+
 = form_for task do |f|
   %table#form
     - if params[:action] == 'edit'

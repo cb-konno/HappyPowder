@@ -19,10 +19,13 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    @task.save
-
-    redirect_to tasks_path
-    flash[:success] = t('flash.create_success', target: Task.model_name.human)
+    if @task.save
+      redirect_to tasks_path
+      flash[:success] = t('flash.create_success', target: Task.model_name.human)
+    else
+      @page_title = t('title_new', title: Task.model_name.human)
+      render new_task_path
+    end
   end
 
   def edit
