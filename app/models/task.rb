@@ -18,5 +18,4 @@ class Task < ApplicationRecord
   enum status: { created: 0, doing: 1, done: 2 }
 
   validates :name, presence: true
-
 end
