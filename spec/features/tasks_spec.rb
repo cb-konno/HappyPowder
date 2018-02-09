@@ -150,7 +150,7 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
     header = find('header')
     expect(header).to have_content t('title_index', title: Task.model_name.human)
     data = parse_data
-    data.pop()
+
     expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4]] }).to eq [
       ['3', '平成のタスク', '最新のタスク', 'doing', 'middle'],
       ['2', '昭和のタスク', '中間のタスク', 'created', 'high'],
