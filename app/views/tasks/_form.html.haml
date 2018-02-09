@@ -20,11 +20,10 @@
       %td= f.text_area :description
     %tr
       %th= f.label :status
-      %td
-        = f.select :status, [[], [t('task.status.created'), 'created'], [t('task.status.doing'), 'doing'], [t('task.status.done'), 'done']]
+      %td= f.select :status, status_selection
     %tr
       %th= f.label :priority
-      %td= f.select :priority, [[], [t('task.priority.high'), 'high'], [t('task.priority.middle'), 'middle'], [t('task.priority.low'), 'low']]
+      %td= f.select :priority, priority_selection
     %tr
       %th= f.label :started_on
       %td= f.date_field(:started_on)
