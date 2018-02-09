@@ -157,5 +157,4 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       ['1', '明治のタスク', '最古のタスク', 'done', 'low']]
   end
 
-
 end
