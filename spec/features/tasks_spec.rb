@@ -170,7 +170,6 @@ RSpec.feature 'バリデーションのテスト', type: :feature do
 
       header = find('header')
       expect(header).to have_content t('title_new', title: Task.model_name.human)
-      expect(page.find('.errors').find('h3')).to have_content '3件のエラーがあります'
       within('.errors') do
         expect(page.find('h3')).to have_content '3件のエラーがあります'
         expect(page.find('.messages').find('ul').all('li').map { |li| li.text }).to have_content [
@@ -180,7 +179,7 @@ RSpec.feature 'バリデーションのテスト', type: :feature do
       end
     end
 
-    it '最大文字数のチェック' do
+    it '最大文字数のテスト' do
       visit new_task_path
       fill_in 'task[name]', with: 'a' * 51
       fill_in 'task[description]', with: 'あ' * 2001
@@ -197,6 +196,51 @@ RSpec.feature 'バリデーションのテスト', type: :feature do
           '説明 は2000文字以内で入力してください',]
       end
     end
+  end
+
+  describe '更新時のバリデーション' do
+    background do
+      Task.create!(id: 1, name: '更新前のタスク名', description: '更新する前のタスクの説明文', status: 'created', priority: 'middle')
+    end
+
+    it '必須項目のテスト' do
+      task = Task.find(1)
+      visit edit_task_path(task)
+      fill_in 'task[name]', with: ''
+      select t('select.default'), from: 'task[status]'
+      select t('select.default'), from: 'task[priority]'
+      click_button t('submit.edit')
+
+      header = find('header')
+      expect(header).to have_content t('title_edit', title: Task.model_name.human)
+      within('.errors') do
+        expect(page.find('h3')).to have_content '3件のエラーがあります'
+        expect(page.find('.messages').find('ul').all('li').map { |li| li.text }).to have_content [
+          'タスク名 を入力してください',
+          'ステータス を選択してください',
+          '優先度 を選択してください',]
+      end
+    end
+
+    it '最大文字数のテスト' do
+      task = Task.find(1)
+      visit edit_task_path(task)
+      fill_in 'task[name]', with: 'a' * 51
+      fill_in 'task[description]', with: 'あ' * 2001
+      select t('task.status.doing'), from: 'task[status]'
+      select t('task.priority.low'), from: 'task[priority]'
+      click_button t('submit.edit')
+
+      header = find('header')
+      expect(header).to have_content t('title_edit', title: Task.model_name.human)
+      within('.errors') do
+        expect(page.find('h3')).to have_content '2件のエラーがあります'
+        expect(page.find('.messages').find('ul').all('li').map { |li| li.text }).to have_content [
+          'タスク名 は50文字以内で入力してください',
+          '説明 は2000文字以内で入力してください',]
+      end
+    end
+
   end
 
 end

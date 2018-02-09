@@ -35,12 +35,13 @@ class TasksController < ApplicationController
   def update
     if @task.update(task_params)
       flash[:success] = t('flash.update_success', target: Task.model_name.human)
+      @page_title = t('title_show', title: Task.model_name.human)
       redirect_to task_path @task
     else
       flash[:failed] = t('flash.update_failed', target: Task.model_name.human)
+      @page_title = t('title_edit', title: Task.model_name.human)
       render :edit
     end
-    @page_title = t('title_edit', title: Task.model_name.human)
   end
 
   def destroy
