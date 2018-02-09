@@ -1,7 +1,7 @@
 class ChangeColumnOfTask < ActiveRecord::Migration[5.1]
   def up
     change_column :tasks, :name, :string, null: false, limit: 50
-    change_column :tasks, :description, :string, limit: 400
+    change_column :tasks, :description, :string, limit: 2000
   end
 
   def down

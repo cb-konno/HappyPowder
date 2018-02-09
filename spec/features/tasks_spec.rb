@@ -158,3 +158,45 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
   end
 
 end
+
+RSpec.feature 'バリデーションのテスト', type: :feature do
+  describe '新規作成時のバリデーション' do
+    it '必須項目のテスト' do
+      visit new_task_path
+      fill_in 'task[name]', with: ''
+      select '', from: 'task[status]'
+      select '', from: 'task[priority]'
+      click_button t('submit.new')
+
+      header = find('header')
+      expect(header).to have_content t('title_new', title: Task.model_name.human)
+      expect(page.find('.errors').find('h3')).to have_content '3件のエラーがあります'
+      within('.errors') do
+        expect(page.find('h3')).to have_content '3件のエラーがあります'
+        expect(page.find('.messages').find('ul').all('li').map { |li| li.text }).to have_content [
+          'タスク名 を入力してください',
+          'ステータス を選択してください',
+          '優先度 を選択してください',]
+      end
+    end
+
+    it '最大文字数のチェック' do
+      visit new_task_path
+      fill_in 'task[name]', with: 'a' * 51
+      fill_in 'task[description]', with: 'あ' * 2001
+      select t('task.status.doing'), from: 'task[status]'
+      select t('task.priority.low'), from: 'task[priority]'
+      click_button t('submit.new')
+
+      header = find('header')
+      expect(header).to have_content t('title_new', title: Task.model_name.human)
+      within('.errors') do
+        expect(page.find('h3')).to have_content '2件のエラーがあります'
+        expect(page.find('.messages').find('ul').all('li').map { |li| li.text }).to have_content [
+          'タスク名 は50文字以内で入力してください',
+          '説明 は2000文字以内で入力してください',]
+      end
+    end
+  end
+
+end

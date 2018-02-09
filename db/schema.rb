@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20180209051856) do
 
   create_table "tasks", force: :cascade do |t|
     t.string "name", limit: 50, null: false
-    t.string "description", limit: 400
+    t.string "description", limit: 2000
     t.integer "priority"
     t.integer "status"
     t.date "started_on"
