@@ -55,8 +55,8 @@ RSpec.feature 'タスクの詳細画面表示テスト', type: :feature do
     expect(table).to have_content task.id
     expect(table).to have_content task.name
     expect(table).to have_content task.description
-    expect(table).to have_content task.status
-    expect(table).to have_content task.priority
+    expect(table).to have_content t('task.status.created')
+    expect(table).to have_content t('task.priority.high')
   end
 
 end
@@ -104,8 +104,8 @@ RSpec.feature 'タスクを更新するテスト', type: :feature do
     table = find('table#disp')
     expect(table).to have_content '更新後のタスク'
     expect(table).to have_content '更新した後のタスクの説明文'
-    expect(table).to have_content 'doing'
-    expect(table).to have_content 'low'
+    expect(table).to have_content t('task.status.doing')
+    expect(table).to have_content t('task.priority.low')
 
   end
 
@@ -152,9 +152,9 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
     data = parse_data
 
     expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4]] }).to eq [
-      ['3', '平成のタスク', '最新のタスク', 'doing', 'middle'],
-      ['2', '昭和のタスク', '中間のタスク', 'created', 'high'],
-      ['1', '明治のタスク', '最古のタスク', 'done', 'low']]
+      ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle')],
+      ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high')],
+      ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low')]]
   end
 
 end

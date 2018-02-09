@@ -12,10 +12,10 @@
     %td= @task.description
   %tr
     %th= Task.human_attribute_name :status
-    %td= @task.status
+    %td= t("task.status.#{@task.status}")
   %tr
     %th= Task.human_attribute_name :priority
-    %td= @task.priority
+    %td= t("task.priority.#{@task.priority}")
   %tr
     %th= Task.human_attribute_name :started_on
     %td= @task.started_on
