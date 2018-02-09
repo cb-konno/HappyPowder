@@ -20,11 +20,11 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     if @task.save
-      redirect_to tasks_path
       flash[:success] = t('flash.create_success', target: Task.model_name.human)
+      redirect_to tasks_path
     else
       @page_title = t('title_new', title: Task.model_name.human)
-      render new_task_path
+      render :new
     end
   end
 
