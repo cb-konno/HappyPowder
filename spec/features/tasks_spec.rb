@@ -1,4 +1,5 @@
-require 'rails_helper'
+#require 'rails_helper'
+require 'features_helper'
 
 RSpec.feature 'リンクのテスト', type: :feature do
 
@@ -133,5 +134,28 @@ RSpec.feature 'タスクを削除するテスト', type: :feature, js: true do
     expect(table).not_to have_content '削除するタスク名'
     expect(table).not_to have_content '削除するタスクの説明文'
   end
+
+end
+
+RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
+  background do
+    Task.create!(id: 1, name: '明治のタスク', description: '最古のタスク', status: 'done', priority: 'low', created_at: '1900-01-01 00:51:00', updated_at: '2017-11-01 03:34:50')
+    Task.create!(id: 2, name: '昭和のタスク', description: '中間のタスク', status: 'created', priority: 'high', created_at: '1982-06-09 12:00:00', updated_at: '2016-12-01 09:21:45')
+    Task.create!(id: 3, name: '平成のタスク', description: '最新のタスク', status: 'doing', priority: 'middle', created_at: '2010-12-12 00:15:33', updated_at: '2018-02-01 23:43:20')
+  end
+
+  it '作成日時の降順で表示する' do
+    visit tasks_path()
+
+    header = find('header')
+    expect(header).to have_content t('title_index', title: Task.model_name.human)
+    data = parse_data
+
+    expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4]] }).to eq [
+      ['3', '平成のタスク', '最新のタスク', 'doing', 'middle'],
+      ['2', '昭和のタスク', '中間のタスク', 'created', 'high'],
+      ['1', '明治のタスク', '最古のタスク', 'done', 'low']]
+  end
+
 
 end

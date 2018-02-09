@@ -1,9 +1,7 @@
 = render 'layouts/task/header', page_title: @page_title
 
 %table#index
-  %tr
-    %td.add{ colspan: 8, align: 'right' }
-      = link_to t(:link_to_new), new_task_path
+
   %tr
     %th
       = Task.human_attribute_name :id
