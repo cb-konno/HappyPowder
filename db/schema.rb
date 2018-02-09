@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180207074625) do
+ActiveRecord::Schema.define(version: 20180209051856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "tasks", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "description"
+    t.string "name", limit: 50, null: false
+    t.string "description", limit: 400
     t.integer "priority"
     t.integer "status"
     t.date "started_on"
