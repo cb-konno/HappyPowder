@@ -36,6 +36,9 @@ ja:
   link_to_edit: '編集'
   link_to_delete: '削除'
 
+  select:
+    default: '選択してください'
+
   title_index: '%{title}一覧'
   title_new: '%{title}新規作成'
   title_show: '%{title}詳細'

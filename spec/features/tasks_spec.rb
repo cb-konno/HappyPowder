@@ -164,8 +164,8 @@ RSpec.feature 'バリデーションのテスト', type: :feature do
     it '必須項目のテスト' do
       visit new_task_path
       fill_in 'task[name]', with: ''
-      select '', from: 'task[status]'
-      select '', from: 'task[priority]'
+      select t('select.default'), from: 'task[status]'
+      select t('select.default'), from: 'task[priority]'
       click_button t('submit.new')
 
       header = find('header')

@@ -20,10 +20,17 @@
       %td= f.text_area :description
     %tr
       %th= f.label :status
-      %td= f.select :status, status_selection
+      %td
+        = f.select :status,
+          Task.statuses.keys.map { |k| [t("task.status.#{k}"), k] },
+          include_blank: t('select.default')
     %tr
       %th= f.label :priority
-      %td= f.select :priority, priority_selection
+      -# %td= f.select :priority, priority_selection
+      %td
+        = f.select :priority,
+          Task.priorities.keys.map { |k| [t("task.priority.#{k}"), k] },
+          include_blank: t('select.default')
     %tr
       %th= f.label :started_on
       %td= f.date_field(:started_on)
