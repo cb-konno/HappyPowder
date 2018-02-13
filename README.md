@@ -1,5 +1,9 @@
 # README
+##### Introduction.
 This is a project for training.
+
+##### URL
+https://happy-powder.herokuapp.com/
 
 ## デプロイ方法
 
@@ -12,6 +16,11 @@ $ git push heroku master
 ~~~
 $ heroku run rake db:migrate
 ~~~
+
+##### 環境
+* ruby 2.5.0p0
+* Rails 5.1.4
+* postgres (PostgreSQL) 10.1
 
 
 ## テーブルスキーマ（モデル名・カラム名・データ型）
