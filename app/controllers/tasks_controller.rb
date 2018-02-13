@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   before_action :task_find, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.all.order(created_at: 'desc')
+    @tasks = Task.all.order(params[:sort])
     @page_title = t('title_index', title: Task.model_name.human)
   end
 
