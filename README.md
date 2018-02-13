@@ -1,6 +1,19 @@
 # README
 This is a project for training.
 
+## デプロイ方法
+
+##### デプロイ
+~~~
+$ git push heroku master
+~~~
+
+##### マイグレーション
+~~~
+$ heroku run rake db:migrate
+~~~
+
+
 ## テーブルスキーマ（モデル名・カラム名・データ型）
 ###### ユーザー(Users)
 | カラム名 | データ型 | 備考 |
