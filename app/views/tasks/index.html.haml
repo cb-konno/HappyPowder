@@ -28,9 +28,9 @@
       %td
         = task.description
       %td
-        = task.status
+        = t("task.status.#{task.status}")
       %td
-        = task.priority
+        = t("task.priority.#{task.priority}")
       %td
         = task.started_on
       %td
