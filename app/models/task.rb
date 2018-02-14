@@ -16,7 +16,6 @@ class Task < ApplicationRecord
   # カラム一覧
   ALLOWED_COLUMN = self.column_names.freeze
 
-  # hoge
   ALLOWED_ORDER = %w(asc desc).freeze
 
   enum priority: { high: 0, middle: 1, low: 2 }
