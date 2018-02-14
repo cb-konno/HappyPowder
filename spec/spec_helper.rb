@@ -15,7 +15,9 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'capybara/rspec'
 require 'selenium-webdriver'
+require 'simplecov'
 
+SimpleCov.start 'rails'
 
 RSpec.configure do |config|
 

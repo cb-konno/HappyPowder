@@ -50,9 +50,12 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+  gem 'simplecov', require: false
 end
 
 group :development do
+  gem 'brakeman', require: false
+  gem 'rails_best_practices', require: false
   gem 'brakeman', require: false
   gem 'rubocop', require: false
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
