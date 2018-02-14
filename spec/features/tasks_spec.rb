@@ -230,6 +230,34 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
     end
   end
 
+  describe '異常パラメータによるソートのテスト' do
+    it '存在しないカラム名でソートする' do
+      visit tasks_path(sort: 'no_exist_column', order: 'asc')
+
+      header = find('header')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
+
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
+        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
+        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
+        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
+    end
+
+    it '存在しないオーダーでソートする' do
+      visit tasks_path(sort: 'ended_on', order: 'senojyun')
+
+      header = find('header')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
+
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
+        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
+        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
+        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
+    end
+  end
+
 end
 
 RSpec.feature 'バリデーションのテスト', type: :feature do
