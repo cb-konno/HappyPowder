@@ -172,8 +172,8 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
 
   describe '作成日時のソートテスト' do
     it '降順で表示する' do
-      visit tasks_path(sort: 'created_at')
-      visit tasks_path(sort: 'created_at desc')
+      visit tasks_path(sort: 'created_at', order: 'asc')
+      visit tasks_path(sort: 'created_at', order: 'desc')
 
       header = find('header')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
@@ -186,8 +186,8 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
     end
 
     it '昇順で表示する' do
-      visit tasks_path(sort: 'created_at desc')
-      visit tasks_path(sort: 'created_at')
+      visit tasks_path(sort: 'created_at', order: 'desc')
+      visit tasks_path(sort: 'created_at', order: 'asc')
 
       header = find('header')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
@@ -202,8 +202,8 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
 
   describe '終了日のソートテスト' do
     it '降順で表示する' do
-      visit tasks_path(sort: 'ended_on')
-      visit tasks_path(sort: 'ended_on desc')
+      visit tasks_path(sort: 'ended_on', order: 'asc')
+      visit tasks_path(sort: 'ended_on', order: 'desc')
 
       header = find('header')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
@@ -216,8 +216,8 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
     end
 
     it '昇順で表示する' do
-      visit tasks_path(sort: 'ended_on desc')
-      visit tasks_path(sort: 'ended_on')
+      visit tasks_path(sort: 'ended_on', order: 'desc')
+      visit tasks_path(sort: 'ended_on', order: 'asc')
 
       header = find('header')
       expect(header).to have_content t('title_index', title: Task.model_name.human)

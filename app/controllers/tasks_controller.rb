@@ -3,11 +3,8 @@
 class TasksController < ApplicationController
   before_action :task_find, only: [:show, :edit, :update, :destroy]
 
-  ALLOWED_SORT_COLUMN = ['ended_on', 'ended_on desc', 'created_at', 'created_at desc'].freeze
-
   def index
-    sort = params[:sort] if ALLOWED_SORT_COLUMN.include?(params[:sort])
-    @tasks = Task.all.order(sort)
+    @tasks = Task.sort_list(params[:sort], params[:order]).all
     @page_title = t('title_index', title: Task.model_name.human)
   end
 
