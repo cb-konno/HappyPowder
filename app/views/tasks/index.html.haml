@@ -1,7 +1,6 @@
 = render 'layouts/task/header', page_title: @page_title
 
 %table#index
-
   %tr
     %th
       = Task.human_attribute_name :id
@@ -16,7 +15,9 @@
     %th
       = Task.human_attribute_name :started_on
     %th
-      = Task.human_attribute_name :ended_on
+      = sort('ended_on')
+    %th
+      = sort('created_at')
     %th
       = Task.human_attribute_name :action
   - @tasks.each do |task|
@@ -35,6 +36,8 @@
         = task.started_on
       %td
         = task.ended_on
+      %td
+        = task.created_at
       %td.menu
         = link_to t(:link_to_show), task_path(task)
         ／

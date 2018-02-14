@@ -139,22 +139,123 @@ end
 
 RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
   background do
-    Task.create!(id: 1, name: '明治のタスク', description: '最古のタスク', status: 'done', priority: 'low', created_at: '1900-01-01 00:51:00', updated_at: '2017-11-01 03:34:50')
-    Task.create!(id: 2, name: '昭和のタスク', description: '中間のタスク', status: 'created', priority: 'high', created_at: '1982-06-09 12:00:00', updated_at: '2016-12-01 09:21:45')
-    Task.create!(id: 3, name: '平成のタスク', description: '最新のタスク', status: 'doing', priority: 'middle', created_at: '2010-12-12 00:15:33', updated_at: '2018-02-01 23:43:20')
+    Task.create!(
+      id: 1,
+      name: '明治のタスク',
+      description: '最古のタスク',
+      status: 'done',
+      priority: 'low',
+      ended_on: '2000-01-01',
+      created_at: '1900-01-01 00:51:00',
+      updated_at: '2017-11-01 03:34:50'
+    )
+    Task.create!(
+      id: 2,
+      name: '昭和のタスク',
+      description: '中間のタスク',
+      status: 'created',
+      priority: 'high',
+      ended_on: '2017-10-18',
+      created_at: '1982-06-09 12:00:00',
+      updated_at: '2016-12-01 09:21:45'
+    )
+    Task.create!(
+      id: 3,
+      name: '平成のタスク',
+      description: '最新のタスク',
+      status: 'doing',
+      priority: 'middle',
+      ended_on: '2013-04-24',
+      created_at: '2010-12-12 00:15:33',
+      updated_at: '2018-02-01 23:43:20')
   end
 
-  it '作成日時の降順で表示する' do
-    visit tasks_path()
+  describe '作成日時のソートテスト' do
+    it '降順で表示する' do
+      visit tasks_path(sort: 'created_at', order: 'asc')
+      visit tasks_path(sort: 'created_at', order: 'desc')
 
-    header = find('header')
-    expect(header).to have_content t('title_index', title: Task.model_name.human)
-    data = parse_data
+      header = find('header')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
 
-    expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4]] }).to eq [
-      ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle')],
-      ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high')],
-      ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low')]]
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4]] }).to eq [
+        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle')],
+        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high')],
+        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low')]]
+    end
+
+    it '昇順で表示する' do
+      visit tasks_path(sort: 'created_at', order: 'desc')
+      visit tasks_path(sort: 'created_at', order: 'asc')
+
+      header = find('header')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
+
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4]] }).to eq [
+        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low')],
+        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high')],
+        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle')]]
+    end
+  end
+
+  describe '終了日のソートテスト' do
+    it '降順で表示する' do
+      visit tasks_path(sort: 'ended_on', order: 'asc')
+      visit tasks_path(sort: 'ended_on', order: 'desc')
+
+      header = find('header')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
+
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
+        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
+        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
+        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
+    end
+
+    it '昇順で表示する' do
+      visit tasks_path(sort: 'ended_on', order: 'desc')
+      visit tasks_path(sort: 'ended_on', order: 'asc')
+
+      header = find('header')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
+
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
+        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01'],
+        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
+        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18']]
+    end
+  end
+
+  describe '異常パラメータによるソートのテスト' do
+    it '存在しないカラム名でソートする' do
+      visit tasks_path(sort: 'no_exist_column', order: 'asc')
+
+      header = find('header')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
+
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
+        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
+        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
+        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
+    end
+
+    it '存在しないオーダーでソートする' do
+      visit tasks_path(sort: 'ended_on', order: 'senojyun')
+
+      header = find('header')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
+
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
+        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
+        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
+        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
+    end
   end
 
 end

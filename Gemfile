@@ -53,6 +53,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'brakeman', require: false
   gem 'rubocop', require: false
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
