@@ -25,9 +25,9 @@
     %th
       = Task.human_attribute_name :started_on
     %th
-      = sort_link(@q, :ended_on, "#{Task.human_attribute_name :ended_on}", 'ended_on asc')
+      = sort_link @q, :ended_on, "#{Task.human_attribute_name :ended_on}"
     %th
-      = sort_link(@q, :created_at, [:created_at, 'created_at desc'], "#{Task.human_attribute_name :created_at}" )
+      = sort_link @q, :created_at, "#{Task.human_attribute_name :created_at}"
     %th
       = Task.human_attribute_name :action
   - @tasks.each do |task|
