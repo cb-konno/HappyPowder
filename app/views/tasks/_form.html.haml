@@ -26,7 +26,6 @@
           include_blank: t('select.default')
     %tr
       %th= f.label :priority
-      -# %td= f.select :priority, priority_selection
       %td
         = f.select :priority,
           Task.priorities.keys.map { |k| [t("task.priority.#{k}"), k] },

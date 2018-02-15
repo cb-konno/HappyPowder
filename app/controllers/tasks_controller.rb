@@ -4,14 +4,19 @@ class TasksController < ApplicationController
   before_action :task_find, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.sort_list(params[:sort], params[:order]).all
+    if params[:form].nil?
+      @form = Form.new
+      @tasks = Task.sort_list(params[:sort], params[:order]).all
+    else
+      form = params.require(:form).permit(:name, :status)
+      @form = Form.new(form)
+      @tasks =
+        Task.search_by_name(params[:form])
+        .search_by_status(params[:form])
+        .sort_list(params[:sort], params[:order])
+        .all
+    end
     @page_title = t('title_index', title: Task.model_name.human)
-  end
-
-  def search
-    @tasks = Task.search_by_name(params[:name]).search_by_status(params[:status]).sort_list(params[:sort], params[:order]).all
-    @page_title = t('title_index', title: Task.model_name.human)
-    render :index
   end
 
   def show
