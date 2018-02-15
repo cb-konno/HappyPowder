@@ -18,8 +18,6 @@ gem 'haml-rails'
 
 gem 'erb2haml'
 
-gem 'awesome_print'
-
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
@@ -55,6 +53,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'awesome_print'
   gem 'brakeman', require: false
   gem 'rails_best_practices', require: false
   gem 'brakeman', require: false
