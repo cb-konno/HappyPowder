@@ -1,15 +1,14 @@
 = render 'layouts/task/header', page_title: @page_title
 
 %search
-  = form_for @form, url: tasks_path, method: 'get' do |f|
-    = f.label Task.human_attribute_name :name
-    = f.text_field :name
-    = f.label Task.human_attribute_name :status
-    = f.select :status,
-      Task.statuses.keys.map { |k| [t("task.status.#{k}"), k] },
-      include_blank: t('select.default')
-    = f.submit t('submit.search')
-
+= search_form_for @q do |f|
+  = f.label Task.human_attribute_name :name
+  = f.search_field :name_cont
+  = f.label Task.human_attribute_name :status
+  = f.select :status_eq,
+    Task.statuses.keys.map { |k| [t("task.status.#{k}"), k] },
+    include_blank: t('select.default')
+  = f.submit t('submit.search')
 
 %table#index
   %tr
@@ -26,9 +25,9 @@
     %th
       = Task.human_attribute_name :started_on
     %th
-      = sort('ended_on')
+      = sort_link(@q, :ended_on, "#{Task.human_attribute_name :ended_on}", 'ended_on asc')
     %th
-      = sort('created_at')
+      = sort_link(@q, :created_at, [:created_at, 'created_at desc'], "#{Task.human_attribute_name :created_at}" )
     %th
       = Task.human_attribute_name :action
   - @tasks.each do |task|

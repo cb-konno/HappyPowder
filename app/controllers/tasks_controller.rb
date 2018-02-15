@@ -4,18 +4,9 @@ class TasksController < ApplicationController
   before_action :task_find, only: [:show, :edit, :update, :destroy]
 
   def index
-    if params[:form].nil?
-      @form = Form.new
-      @tasks = Task.sort_list(params[:sort], params[:order]).all
-    else
-      form = params.require(:form).permit(:name, :status)
-      @form = Form.new(form)
-      @tasks =
-        Task.search_by_name(params[:form])
-        .search_by_status(params[:form])
-        .sort_list(params[:sort], params[:order])
-        .all
-    end
+    @q = Task.ransack(params[:q])
+    @q.sorts = 'created_at desc' if @q.sorts.empty? || check_order?(@q.sorts)
+    @tasks = @q.result
     @page_title = t('title_index', title: Task.model_name.human)
   end
 
@@ -70,5 +61,9 @@ class TasksController < ApplicationController
 
     def task_params
       params.require(:task).permit(:name, :description, :status, :priority, :started_on, :ended_on)
+    end
+
+    def check_order?(sorts)
+      ['created_at asc', 'created_at desc', 'ended_on asc', 'ended_on desc'].exclude? sorts
     end
 end
