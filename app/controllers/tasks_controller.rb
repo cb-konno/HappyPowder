@@ -8,6 +8,12 @@ class TasksController < ApplicationController
     @page_title = t('title_index', title: Task.model_name.human)
   end
 
+  def search
+    @tasks = Task.search_by_name(params[:name]).search_by_status(params[:status]).sort_list(params[:sort], params[:order]).all
+    @page_title = t('title_index', title: Task.model_name.human)
+    render :index
+  end
+
   def show
     @page_title = t('title_show', title: Task.model_name.human)
   end

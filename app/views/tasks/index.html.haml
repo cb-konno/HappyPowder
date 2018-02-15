@@ -1,5 +1,14 @@
 = render 'layouts/task/header', page_title: @page_title
 
+%search
+  = form_tag search_tasks_path, method: 'get' do
+    = label_tag Task.human_attribute_name :name
+    = text_field_tag :name
+    = select_tag :status,
+      options_for_select(Task.statuses.keys.map { |k| [t("task.status.#{k}"), k] }),
+      include_blank: t('select.default')
+    = submit_tag t('submit.search')
+
 %table#index
   %tr
     %th

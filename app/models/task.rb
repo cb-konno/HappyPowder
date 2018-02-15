@@ -26,6 +26,18 @@ class Task < ApplicationRecord
   validates :status, presence: { message: I18n.t('errors.messages.select') }
   validates :priority, presence: { message: I18n.t('errors.messages.select') }
 
+  scope :search_by_name, ->(name) {
+    if name.present?
+      where('name LIKE ? ' , "%#{name}")
+    end
+  }
+
+  scope :search_by_status, ->(status) {
+    if status.present?
+      where(status: status)
+    end
+  }
+
   scope :sort_list, -> (sort = 'created_at', order = 'desc') {
     if sort.in?(ALLOWED_COLUMN) && order.in?(ALLOWED_ORDER)
       order("#{sort}": order)
