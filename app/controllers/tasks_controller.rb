@@ -4,8 +4,7 @@ class TasksController < ApplicationController
   before_action :task_find, only: [:show, :edit, :update, :destroy]
 
   def index
-    @q = Task.ransack(params[:q])
-    @q.sorts = 'created_at desc' if @q.sorts.empty? || check_order?(@q.sorts)
+    @q = Task.ransack_with_check_params(params)
     @tasks = @q.result
     @page_title = t('title_index', title: Task.model_name.human)
   end
@@ -61,9 +60,5 @@ class TasksController < ApplicationController
 
     def task_params
       params.require(:task).permit(:name, :description, :status, :priority, :started_on, :ended_on)
-    end
-
-    def check_order?(sorts)
-      ['created_at asc', 'created_at desc', 'ended_on asc', 'ended_on desc'].exclude? sorts
     end
 end
