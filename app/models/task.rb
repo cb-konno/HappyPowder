@@ -2,15 +2,21 @@
 #
 # Table name: messages
 #
-#  id           :integer          not null, primary key
-#  name         :varchar(255)
-#  description  :text
+#  id           :integer                  not null, primary key
+#  name         :string (50)              not null
+#  description  :string (2000)
 #  priority     :enum
 #  status       :enum
 #  start_on     :date
 #  ended_on     :datet
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
+#  created_at   :datetime                  not null
+#  updated_at   :datetime                  not null
+#
+#
+# Indexes:
+#   tasks_pkey PRIMARY KEY, btree (id)
+#   index_tasks_on_name   btree (name)
+#   index_tasks_on_status btree (status)
 #
 class Task < ApplicationRecord
   enum priority: { high: 0, middle: 1, low: 2 }
