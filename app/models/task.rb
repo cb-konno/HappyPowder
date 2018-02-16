@@ -16,6 +16,7 @@
 # Indexes:
 #   tasks_pkey PRIMARY KEY, btree (id)
 #   index_tasks_on_name   btree (name)
+#   index_tasks_on_priority btree (priority)
 #   index_tasks_on_status btree (status)
 #
 class Task < ApplicationRecord
