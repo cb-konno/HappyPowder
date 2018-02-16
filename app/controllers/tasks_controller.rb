@@ -5,7 +5,7 @@ class TasksController < ApplicationController
 
   def index
     @q = Task.ransack_with_check_params(params)
-    p @tasks = @q.result
+    @tasks = @q.result
     @page_title = t('title_index', title: Task.model_name.human)
   end
 
