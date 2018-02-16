@@ -6,7 +6,7 @@
   = f.search_field :name_cont
   = f.label Task.human_attribute_name :status
   = f.select :status_eq,
-    Task.statuses.keys.map { |k| [t("task.status.#{k}"), k] },
+    Task.statuses.map { |k, v| [t("task.status.#{k}"), v] },
     include_blank: t('select.default')
   = f.submit t('submit.search')
 
@@ -25,9 +25,9 @@
     %th
       = Task.human_attribute_name :started_on
     %th
-      = sort_link @q, :ended_on, "#{Task.human_attribute_name :ended_on}"
+      = sort_link @q, :ended_on, Task.human_attribute_name(:ended_on)
     %th
-      = sort_link @q, :created_at, "#{Task.human_attribute_name :created_at}"
+      = sort_link @q, :created_at, Task.human_attribute_name(:created_at)
     %th
       = Task.human_attribute_name :action
   - @tasks.each do |task|
