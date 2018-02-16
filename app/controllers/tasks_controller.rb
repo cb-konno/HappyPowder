@@ -4,7 +4,8 @@ class TasksController < ApplicationController
   before_action :task_find, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasks = Task.sort_list(params[:sort], params[:order]).all
+    @q = Task.ransack_with_check_params(params)
+    @tasks = @q.result
     @page_title = t('title_index', title: Task.model_name.human)
   end
 

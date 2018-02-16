@@ -59,6 +59,7 @@ ja:
   submit:
     new: '新規作成'
     edit: '更新'
+    search: '検索'
 
   task:
     status:

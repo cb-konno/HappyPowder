@@ -172,8 +172,7 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
 
   describe '作成日時のソートテスト' do
     it '降順で表示する' do
-      visit tasks_path(sort: 'created_at', order: 'asc')
-      visit tasks_path(sort: 'created_at', order: 'desc')
+      visit tasks_path('q[s]': 'created_at desc')
 
       header = find('header')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
@@ -186,8 +185,7 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
     end
 
     it '昇順で表示する' do
-      visit tasks_path(sort: 'created_at', order: 'desc')
-      visit tasks_path(sort: 'created_at', order: 'asc')
+      visit tasks_path('q[s]': 'created_at asc')
 
       header = find('header')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
@@ -202,8 +200,7 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
 
   describe '終了日のソートテスト' do
     it '降順で表示する' do
-      visit tasks_path(sort: 'ended_on', order: 'asc')
-      visit tasks_path(sort: 'ended_on', order: 'desc')
+      visit tasks_path('q[s]': 'ended_on desc')
 
       header = find('header')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
@@ -216,8 +213,7 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
     end
 
     it '昇順で表示する' do
-      visit tasks_path(sort: 'ended_on', order: 'desc')
-      visit tasks_path(sort: 'ended_on', order: 'asc')
+      visit tasks_path('q[s]': 'ended_on asc')
 
       header = find('header')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
@@ -230,9 +226,35 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
     end
   end
 
+  describe '優先度でソートするテスt' do
+    it '降順でテストする' do
+      visit tasks_path('q[s]': 'priority desc')
+
+      header = find('header')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
+        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01'],
+        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
+        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18']]
+    end
+
+    it '昇順でテストする' do
+      visit tasks_path('q[s]': 'priority asc')
+
+      header = find('header')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
+        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
+        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
+        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
+    end
+  end
+
   describe '異常パラメータによるソートのテスト' do
     it '存在しないカラム名でソートする' do
-      visit tasks_path(sort: 'no_exist_column', order: 'asc')
+      visit tasks_path('q[s]': 'not_existed desc')
 
       header = find('header')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
@@ -245,7 +267,7 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
     end
 
     it '存在しないオーダーでソートする' do
-      visit tasks_path(sort: 'ended_on', order: 'senojyun')
+      visit tasks_path('q[s]': 'created_at not_existed_order')
 
       header = find('header')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
