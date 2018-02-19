@@ -33,13 +33,16 @@ h2
       bottom: 1px solid $red
 
 div
-  width: 860px
+  width: 960px
   margin: 0 auto
-  &#pager
-    text-align: right
+  &.search
+    margin: 0 auto
+  &.pager
+    margin: 5 auto
+
 table
   margin: 0 auto
-  font-size: 12px
+  font-size: 14px
   border:
     collapse: separate
     spacing: 1px 10px
@@ -47,12 +50,11 @@ table
     background: $blue
     color: $white
     vertical-align: middle
+    font-size: 16px
     width: 80px
     overflow: visible
     position: relative
     font-weight: normal
-  td
-    background: $purple
 
   &#index
     th
@@ -61,32 +63,33 @@ table
           text-decoration: none
     td
       &.menu
-        width: 115px
-        padding: 10px
-      &.add
-        background: $white
-  &#form
-    th
-      width: 85px
-      padding:
-        right: 10px
-        left: 10px
-    td
-      background: $white
-      &.input_disabled
-        background: $purple
-        width: 400px
-  &#disp
-    th
-      width: 85px
-      padding:
-        right: 10px
-        left: 10px
-    td
-      width: 400px
+        width: 100px
+        padding
+          left: 5px
+          right: 5px
 
-input
-  width: 400px
+  // &#form
+  //   th
+  //     width: 85px
+  //     padding:
+  //       right: 10px
+  //       left: 10px
+  //   td
+  //     background: $white
+  //     &.input_disabled
+  //       background: $purple
+  //       width: 400px
+  // &#disp
+  //   th
+  //     width: 85px
+  //     padding:
+  //       right: 10px
+  //       left: 10px
+  //   td
+  //     width: 400px
+
+// input
+//   width: 400px
 
 textarea
   width: 400px
@@ -98,7 +101,9 @@ select
 
 .flash
   border-radius: 20px
-  margin: 30px
+  margin:
+    top: 20px
+    bottom: 20px
 
 .success-message
   background: $blue
@@ -111,7 +116,7 @@ select
 footer
   margin: 0 auto
   width: 960px
-  font-size: 12px
+  font-size: 14px
   text-align: right
 
 hr

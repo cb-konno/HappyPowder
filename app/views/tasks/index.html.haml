@@ -1,20 +1,29 @@
 = render 'layouts/task/header', page_title: @page_title
 
-#search.form-group
+#search
   = search_form_for @q do |f|
-    = f.label Task.human_attribute_name :name
-    = f.search_field :name_cont, class: 'form-control'
-    = f.label Task.human_attribute_name :priority
-    = f.select :priority_eq,
-      Task.priorities.map { |k, v| [t("task.priority.#{k}"), v] },
-      include_blank: t('select.default')
-    = f.label Task.human_attribute_name :status
-    = f.select :status_eq,
-      Task.statuses.map { |k, v| [t("task.status.#{k}"), v] },
-      include_blank: t('select.default')
-    = f.submit t('submit.search')
+    .form-row
+      .form-group.col-md-6
+        = f.label Task.human_attribute_name :name
+        = f.search_field :name_cont, class: 'form-control'
+      .form-group.col-md-3
+        = f.label Task.human_attribute_name :priority, class: 'control-label'
+        = f.select :status_eq,
+          Task.statuses.map { |k, v| [t("task.status.#{k}"), v] },
+          { include_blank: t('select.default') },
+          class: 'form-control'
+      .form-group.col-md-3
+        = f.label Task.human_attribute_name :status, class: 'control-label'
+        = f.select :priority_eq,
+          Task.priorities.map { |k, v| [t("task.priority.#{k}"), v] },
+          { include_blank: t('select.default') },
+          class: 'form-control'
+    .form-row
+      .form-group.col-md-11
+      .form-group.col-md-1
+        = f.submit t('submit.search'), class: 'btn btn-primary'
 
-%table#index
+%table#index.table.table-striped
   %tr
     %th
       = Task.human_attribute_name :id
@@ -58,6 +67,8 @@
         = link_to t(:link_to_edit), edit_task_path(task)
         ／
         = link_to t(:link_to_delete), task, method: :delete , data: { confirm: t('confirm.delete', target: Task.model_name.human) }
-#pager
+
+.pager
   = paginate @tasks
+
 = render 'layouts/task/footer'

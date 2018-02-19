@@ -36,6 +36,13 @@ ja:
   link_to_edit: '編集'
   link_to_delete: '削除'
 
+  pagination:
+    first: '最初'
+    last: '最後'
+    previous: '前へ'
+    next: '次へ'
+    truncate: '...'
+
   select:
     default: '選択してください'
 
