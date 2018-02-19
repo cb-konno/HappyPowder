@@ -368,7 +368,7 @@ end
 RSpec.feature '一覧のページャーのテスト', type: :feature do
   background do
     records = []
-    25.times do |i|
+    55.times do |i|
       records[i] = Task.create!(id: i,  name: 'タスク' + i, status: 'created', priority: 'middle', created_at: Time.now)
     end
 
@@ -379,12 +379,12 @@ RSpec.feature '一覧のページャーのテスト', type: :feature do
       data = parse_data
       expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
 
-      click_link t('2')
+      click_link t('3')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
       expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
 
-      click_link t('3')
+      click_link t('6')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
       expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
