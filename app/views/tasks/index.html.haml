@@ -1,9 +1,9 @@
 = render 'layouts/task/header', page_title: @page_title
 
-#search
+#search.form-group
   = search_form_for @q do |f|
     = f.label Task.human_attribute_name :name
-    = f.search_field :name_cont
+    = f.search_field :name_cont, class: 'form-control'
     = f.label Task.human_attribute_name :priority
     = f.select :priority_eq,
       Task.priorities.map { |k, v| [t("task.priority.#{k}"), v] },
