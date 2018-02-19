@@ -363,7 +363,57 @@ RSpec.feature 'バリデーションのテスト', type: :feature do
           '説明 は2000文字以内で入力してください',]
       end
     end
-
   end
+end
 
+RSpec.feature '一覧のページャーのテスト', type: :feature do
+  background do
+    records = []
+    25.times do |i|
+      records[i] = Task.create!(id: i,  name: 'タスク' + i, status: 'created', priority: 'middle', created_at: Time.now)
+    end
+
+    it 'ページャーのテスト（番号）' do
+      visit tasks_path
+      header = find('header')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
+      expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
+
+      click_link t('2')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
+      expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
+
+      click_link t('3')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
+      expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
+
+      click_link t('2')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
+      expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
+
+      click_link t('Next')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
+      expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
+
+      click_link t('Previous')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
+      expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
+
+      click_link t('First')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
+      expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
+
+      click_link t('Last')
+      expect(header).to have_content t('title_index', title: Task.model_name.human)
+      data = parse_data
+      expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
+    end
+  end
 end
