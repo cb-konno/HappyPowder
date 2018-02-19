@@ -1,4 +1,3 @@
-#require 'rails_helper'
 require 'features_helper'
 
 RSpec.feature 'リンクのテスト', type: :feature do
@@ -395,22 +394,22 @@ RSpec.feature '一覧のページャーのテスト', type: :feature do
       data = parse_data
       expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
 
-      click_link t('Next')
+      click_link t('pagination.next')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
       expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
 
-      click_link t('Previous')
+      click_link t('pagination..previous')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
       expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
 
-      click_link t('First')
+      click_link t('pagination.first')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
       expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
 
-      click_link t('Last')
+      click_link t('pagination.last')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
       expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
