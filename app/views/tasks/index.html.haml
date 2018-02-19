@@ -58,5 +58,6 @@
         = link_to t(:link_to_edit), edit_task_path(task)
         ／
         = link_to t(:link_to_delete), task, method: :delete , data: { confirm: t('confirm.delete', target: Task.model_name.human) }
-
+#pager
+  = paginate @tasks
 = render 'layouts/task/footer'
