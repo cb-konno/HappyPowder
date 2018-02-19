@@ -7,7 +7,6 @@ class TasksController < ApplicationController
     @q = Task.ransack_with_check_params(params)
     @tasks = @q.result.page(params[:page]).per(5)
     @page_title = t('title_index', title: Task.model_name.human)
-
   end
 
   def show
