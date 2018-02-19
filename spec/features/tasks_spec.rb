@@ -369,7 +369,7 @@ end
 RSpec.feature '一覧のページャーのテスト', type: :feature do
   background do
     records = []
-    for i in 1..25 do
+    25.times do |i|
       records[i] = Task.create!(id: i,  name: 'タスク' + i, status: 'created', priority: 'middle', created_at: Time.now)
     end
 
