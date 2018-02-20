@@ -1,9 +1,38 @@
 = render 'layouts/header', page_title: @page_title
 
+%table
+  %tr
+    %th
+      = User.human_attribute_name :id
+    %th
+      = User.human_attribute_name :name
+    %th
+      = User.human_attribute_name :mail
+    %th
+      = User.human_attribute_name :password
+    %th
+      = User.human_attribute_name :created_at
+    %th
+      = User.human_attribute_name :updated_at
+    %th
+      = User.human_attribute_name :is_deleted
+  - @users.each do |user|
+    %tr
+      %td
+        = user.id
+      %td
+        = user.name
+      %td
+        = user.mail
+      %td
+        = user.password
+      %td
+        = user.created_at
+      %td
+        = user.updated_at
+      %td
+        = user.is_deleted
 
-- @users.each do |task|
-  = user.id
-  = user.name
 
 
 
