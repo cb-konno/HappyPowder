@@ -1,0 +1,33 @@
+.container
+  = form_for user do |f|
+    - if params[:action] == 'edit'
+      .form-group.row
+        .col-2.col-form-label.column
+          =f.label :id, class: 'control-label'
+        .col-10
+          = f.text_field :id, class: 'form-control', readonly: true
+    .form-group.row
+      .col-2.col-form-label.column
+        =f.label :name, class: 'control-label'
+      .col-10
+        = f.text_field :name, class: 'form-control'
+    .form-group.row
+      .col-2.col-form-label.column
+        =f.label :mail, class: 'control-label'
+      .col-10
+        = f.text_field :mail, class: 'form-control'
+    .form-group.row
+      .col-2.col-form-label.column
+        =f.label :password, class: 'control-label'
+      .col-10
+        = f.text_field :password,
+          { class: 'form-control', type: 'password' }
+    .form-group.row
+      .col-2.col-form-label
+      .col-10.text-right
+        = f.text_field :is_deleted,
+          { class: 'form-control', type: 'hidden', value: false }
+        - if params[:action] == 'edit'
+          = f.submit t('submit.edit'), class: 'btn btn-primary'
+        - else
+          = f.submit t('submit.new'), class: 'btn btn-primary'
