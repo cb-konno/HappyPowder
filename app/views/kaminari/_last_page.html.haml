@@ -5,8 +5,11 @@
 -#    total_pages:   total number of pages
 -#    per_page:      number of items to fetch per page
 -#    remote:        data-remote
-%li.page-item.next{ class: "#{'disabled' if current_page.last?}" }
-  = link_to (current_page.last? ? "#" : url), class: "page-link", "aria-label" => "Last", :remote => remote do
+%li.page-item.next{ class: "#{ 'disabled' if current_page.last? }" }
+  = link_to (current_page.last? ? "#" : url),
+    { class: "page-link" },
+    "aria-label" => "Last",
+    :remote => remote do
     %span{"aria-hidden" => "true"}
       = t('pagination.last')
     %span.sr-only

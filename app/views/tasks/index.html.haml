@@ -5,23 +5,24 @@
     .form-row
       .form-group.col-md-6
         = f.label Task.human_attribute_name :name
-        = f.search_field :name_cont, class: 'form-control'
+        = f.search_field :name_cont, { class: 'form-control' }
       .form-group.col-md-3
-        = f.label Task.human_attribute_name :priority, class: 'control-label'
+        = f.label Task.human_attribute_name :priority,
+          { class: 'control-label' }
         = f.select :status_eq,
           Task.statuses.map { |k, v| [t("task.status.#{k}"), v] },
           { include_blank: t('select.default') },
-          class: 'form-control'
+          { class: 'form-control' }
       .form-group.col-md-3
-        = f.label Task.human_attribute_name :status, class: 'control-label'
+        = f.label Task.human_attribute_name :status, { class: 'control-label' }
         = f.select :priority_eq,
           Task.priorities.map { |k, v| [t("task.priority.#{k}"), v] },
           { include_blank: t('select.default') },
-          class: 'form-control'
+          { class: 'form-control' }
     .form-row
       .form-group.col-md-11
       .form-group.col-md-1
-        = f.submit t('submit.search'), class: 'btn btn-primary'
+        = f.submit t('submit.search'), { class: 'btn btn-primary' }
 
 %table#index.table.table-striped
   %tr
