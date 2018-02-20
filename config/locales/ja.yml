@@ -81,6 +81,7 @@ ja:
   activerecord:
     models:
       task: 'タスク'
+      user: 'ユーザー'
     attributes:
       task:
         id: 'ID'
@@ -91,6 +92,13 @@ ja:
         started_on: '開始日'
         ended_on: '終了日'
         action: '操作'
+        created_at: '作成日時'
+        updated_at: '更新日時'
+      user:
+        id: 'ID'
+        mail: 'メールアドレス'
+        password: 'パスワード'
+        name: 'ユーザー名'
         created_at: '作成日時'
         updated_at: '更新日時'
 

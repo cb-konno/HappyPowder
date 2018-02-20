@@ -1,0 +1,6 @@
+%header
+  %h2
+    = page_title
+  - if flash[:success]
+    .flash.success-message
+      = flash[:success]

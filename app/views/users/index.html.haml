@@ -1,0 +1,10 @@
+= render 'layouts/header', page_title: @page_title
+
+
+- @users.each do |task|
+  = user.id
+  = user.name
+
+
+
+= render 'layouts/footer'
