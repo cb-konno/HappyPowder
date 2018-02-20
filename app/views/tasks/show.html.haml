@@ -1,32 +1,51 @@
 = render 'layouts/task/header', page_title: @page_title
 
-%table#disp
-  %tr
-    %th= Task.human_attribute_name :id
-    %td= @task.id
-  %tr
-    %th= Task.human_attribute_name :name
-    %td= @task.name
-  %tr
-    %th= Task.human_attribute_name :description
-    %td= @task.description
-  %tr
-    %th= Task.human_attribute_name :status
-    %td= t("task.status.#{@task.status}")
-  %tr
-    %th= Task.human_attribute_name :priority
-    %td= t("task.priority.#{@task.priority}")
-  %tr
-    %th= Task.human_attribute_name :started_on
-    %td= @task.started_on
-  %tr
-    %th= Task.human_attribute_name :ended_on
-    %td= @task.ended_on
-  %tr
-    %th= Task.human_attribute_name :created_at
-    %td= @task.created_at
-  %tr
-    %th= Task.human_attribute_name :updated_at
-    %td= @task.updated_at
+.container
+  #display
+    .row
+      .col-2.column
+        = Task.human_attribute_name :id
+      .col-10
+        = @task.id
+    .row
+      .col-2.column
+        = Task.human_attribute_name :name
+      .col-10
+        = @task.name
+    .row
+      .col-2.column
+        = Task.human_attribute_name :description
+      .col-10
+        = @task.description
+    .row
+      .col-2.column
+        = Task.human_attribute_name :status
+      .col-10
+        = @task.status
+    .row
+      .col-2.column
+        = Task.human_attribute_name :priority
+      .col-10
+        = @task.priority
+    .row
+      .col-2.column
+        = Task.human_attribute_name :started_on
+      .col-10
+        = @task.started_on
+    .row
+      .col-2.column
+        = Task.human_attribute_name :ended_on
+      .col-10
+        = @task.ended_on
+    .row
+      .col-2.column
+        = Task.human_attribute_name :created_at
+      .col-10
+        = @task.created_at
+    .row
+      .col-2.column
+        = Task.human_attribute_name :updated_at
+      .col-10
+        = @task.updated_at
 
 = render 'layouts/task/footer', task: @task
