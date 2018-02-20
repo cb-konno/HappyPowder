@@ -8,8 +8,7 @@
 %li.page-item.prev{ class: "#{ 'disabled' if current_page.first? }" }
   = link_to (current_page.first? ? "#" : url),
     { class: "page-link" },
-    "aria-label" => "Previous",
-    :remote => remote do
+    { "aria-label" => "Last", remote: remote } do
     %span{ "aria-hidden" => "true" }
       = t('pagination.previous').html_safe
     %span.sr-only
