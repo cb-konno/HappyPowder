@@ -21,12 +21,12 @@
       .col-2.column
         = Task.human_attribute_name :status
       .col-10
-        = @task.status
+        = t("task.status.#{@task.status}")
     .row
       .col-2.column
         = Task.human_attribute_name :priority
       .col-10
-        = @task.priority
+        = t("task.priority.#{@task.priority}")
     .row
       .col-2.column
         = Task.human_attribute_name :started_on

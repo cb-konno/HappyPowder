@@ -36,7 +36,7 @@
         = f.label :priority, class: 'control-label'
       .col-10
         = f.select :priority,
-          Task.priorities.keys.map { |k| [t("task.status.#{k}"), k] },
+          Task.priorities.keys.map { |k| [t("task.priority.#{k}"), k] },
           { include_blank: t('select.default') },
           class: 'form-control'
     .form-group.row

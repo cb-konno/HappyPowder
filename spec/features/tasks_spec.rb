@@ -23,7 +23,6 @@ RSpec.feature 'タスクの新規作成テスト', type: :feature do
   it 'タスクの登録をテストします' do
     visit new_task_path
     fill_in 'task[name]', with: 'テストで追加する課題の名前'
-    fill_in 'task[description]', with: '課題の説明文を長々と…'
     select t('task.status.created'), from: 'task[status]'
     select t('task.priority.middle'), from: 'task[priority]'
     fill_in 'task[started_on]', with: '2018-02-01'
@@ -34,7 +33,6 @@ RSpec.feature 'タスクの新規作成テスト', type: :feature do
     expect(header).to have_content t('title_index', title: Task.model_name.human)
     table = find('table#index')
     expect(table).to have_content 'テストで追加する課題の名前'
-    expect(table).to have_content '課題の説明文を長々と…'
 
   end
 
@@ -50,12 +48,12 @@ RSpec.feature 'タスクの詳細画面表示テスト', type: :feature do
 
     header = find('header')
     expect(header).to have_content t('title_show', title: Task.model_name.human)
-    table = find('table#disp')
-    expect(table).to have_content task.id
-    expect(table).to have_content task.name
-    expect(table).to have_content task.description
-    expect(table).to have_content t('task.status.created')
-    expect(table).to have_content t('task.priority.high')
+    disp = find('div#display')
+    expect(disp).to have_content task.id
+    expect(disp).to have_content task.name
+    expect(disp).to have_content task.description
+    expect(disp).to have_content t('task.status.created')
+    expect(disp).to have_content t('task.priority.high')
   end
 
 end
@@ -72,8 +70,8 @@ RSpec.feature 'タスクを更新するテスト', type: :feature do
 
     header = find('header')
     expect(header).to have_content t('title_edit', title: Task.model_name.human)
-    form = find('table#form')
-    expect(form).to have_content 1
+    input = find('input#task_id')
+    expect(input.value).to eq '1'
     input = find('input#task_name')
     expect(input.value).to eq task.name
     textarea = find('textarea#task_description')
@@ -100,12 +98,12 @@ RSpec.feature 'タスクを更新するテスト', type: :feature do
 
     header = find('header')
     expect(header).to have_content t('title_show', title: Task.model_name.human)
-    table = find('table#disp')
-    expect(table).to have_content '更新後のタスク'
-    expect(table).to have_content '更新した後のタスクの説明文'
-    expect(table).to have_content t('task.status.doing')
-    expect(table).to have_content t('task.priority.low')
-
+    disp = find('div#display')
+    expect(disp).to have_content '1'
+    expect(disp).to have_content '更新後のタスク'
+    expect(disp).to have_content '更新した後のタスクの説明文'
+    expect(disp).to have_content t('task.status.doing')
+    expect(disp).to have_content t('task.priority.low')
   end
 
 end
@@ -122,7 +120,7 @@ RSpec.feature 'タスクを削除するテスト', type: :feature, js: true do
   it 'タスクを削除する' do
     header = find('header')
     expect(header).to have_content t('title_show', title: Task.model_name.human)
-    table = find('table#disp')
+    table = find('div#display')
     expect(table).to have_content '削除するタスク名'
     expect(table).to have_content '削除するタスクの説明文'
 
@@ -177,10 +175,10 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
 
-      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4]] }).to eq [
-        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle')],
-        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high')],
-        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low')]]
+      expect(data.map { |e| [e[0], e[1], e[2], e[3]] }).to eq [
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle')],
+        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high')],
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low')]]
     end
 
     it '昇順で表示する' do
@@ -190,10 +188,10 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
 
-      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4]] }).to eq [
-        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low')],
-        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high')],
-        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle')]]
+      expect(data.map { |e| [e[0], e[1], e[2], e[3]] }).to eq [
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low')],
+        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high')],
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle')]]
     end
   end
 
@@ -205,10 +203,10 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
 
-      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
-        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
-        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
-        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[5]] }).to eq [
+        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
     end
 
     it '昇順で表示する' do
@@ -218,10 +216,10 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
 
-      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
-        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01'],
-        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
-        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18']]
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[5]] }).to eq [
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01'],
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
+        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18']]
     end
   end
 
@@ -232,10 +230,10 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       header = find('header')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
-      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
-        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01'],
-        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
-        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18']]
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[5]] }).to eq [
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01'],
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
+        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18']]
     end
 
     it '昇順でテストする' do
@@ -244,10 +242,10 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       header = find('header')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
-      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
-        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
-        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
-        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[5]] }).to eq [
+        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
     end
   end
 
@@ -259,10 +257,10 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
 
-      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
-        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
-        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
-        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[5]] }).to eq [
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
+        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
     end
 
     it '存在しないオーダーでソートする' do
@@ -272,10 +270,10 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
 
-      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
-        ['3', '平成のタスク', '最新のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
-        ['2', '昭和のタスク', '中間のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
-        ['1', '明治のタスク', '最古のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[5]] }).to eq [
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
+        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
     end
   end
 
