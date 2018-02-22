@@ -38,7 +38,4 @@
       .col-10
         = @user.is_deleted
 
-
-= link_to t('link_to_index'), users_path
-／
-= link_to t('link_to_edit'), edit_user_path
+= render 'layouts/user/footer', user: @user

@@ -1,4 +1,4 @@
-= render 'layouts/task/header', page_title: @page_title
+= render 'layouts/header', page_title: @page_title
 
 .container
   #search
@@ -66,7 +66,7 @@
           ／
           = link_to t(:link_to_delete), task, method: :delete , data: { confirm: t('confirm.delete', target: Task.model_name.human) }
 
-.pager
-  = paginate @tasks
+  .pager
+    = paginate @tasks
 
 = render 'layouts/task/footer'

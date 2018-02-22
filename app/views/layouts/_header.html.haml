@@ -1,6 +1,14 @@
 %header
   %h2
     = page_title
+
+  .nav
+    %ul.nav
+      %li.nav-item
+        = link_to t('title_index', title: User.model_name.human), users_path, class: 'nav-link'
+      %li.nav-item
+        = link_to t('title_index', title: Task.model_name.human), tasks_path, class: 'nav-link'
+
   - if flash[:success]
     .flash.success-message
       = flash[:success]

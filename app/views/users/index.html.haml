@@ -2,7 +2,7 @@
 
 
 .container
-  = link_to t('submit.new'), new_user_path 
+  = link_to t('submit.new'), new_user_path
 
   %table
     %tr
@@ -45,4 +45,4 @@
           ／
           = link_to t(:link_to_delete), user, method: :delete , data: { confirm: t('confirm.delete', target: User.model_name.human) }
 
-= render 'layouts/footer'
+= render 'layouts/user/footer'

@@ -1,0 +1,16 @@
+%footer
+  %hr
+
+  - unless params[:action] == 'index'
+    = link_to t(:link_to_index), users_path
+
+  - if params[:action] == 'index'
+    = link_to t(:link_to_new), new_user_path
+
+  - if params[:action] == 'show'
+    ／
+    = link_to t(:link_to_edit), edit_user_path(user)
+
+  - if params[:action] == 'show' || params[:action] == 'edit'
+    ／
+    = link_to t(:link_to_delete), user, method: :delete , data: { confirm: t('confirm.delete', target: user.model_name.human) }
