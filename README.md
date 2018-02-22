@@ -54,6 +54,7 @@ $ heroku run rake db:migrate
 | ended_on   | date        |             |
 | created_at | timestamp   |             |
 | updated_at | timestamp   |             |
+| user_id    | integer     | 外部キー：ユーザーテーブル（Users.ID）      |
 
 ###### ラベルマスタ(Mst_Label)
 | カラム名 | データ型 | 備考 |
