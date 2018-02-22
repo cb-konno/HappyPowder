@@ -2,10 +2,11 @@
 #
 class TasksController < ApplicationController
   before_action :task_find, only: [:show, :edit, :update, :destroy]
+  before_action :user_find_all, only: [:new, :create, :edit, :update]
 
   def index
     @q = Task.ransack_with_check_params(params)
-    @tasks = @q.result.page(params[:page]).per(5)
+    @tasks = @q.result.includes(:user).page(params[:page]).per(5)
     @page_title = t('title_index', title: Task.model_name.human)
   end
 
@@ -59,6 +60,10 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.require(:task).permit(:name, :description, :status, :priority, :started_on, :ended_on)
+      params.require(:task).permit(:name, :description, :status, :priority, :started_on, :ended_on, :user_id)
+    end
+
+    def user_find_all
+      @users = User.ransack(params[:q]).result
     end
 end

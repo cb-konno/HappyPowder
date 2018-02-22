@@ -20,6 +20,14 @@
         = f.text_field :name, class: 'form-control'
     .form-group.row
       .col-2.col-form-label.column
+        = f.label :user, class: 'control-label'
+      .col-10
+        = f.select :user_id,
+          users.map{ |user| [user.name, user.id] },
+          { include_blank: t('select.default') },
+          class: 'form-control'
+    .form-group.row
+      .col-2.col-form-label.column
         = f.label :description, class: 'control-label'
       .col-10
         = f.text_area :description, class: 'form-control'

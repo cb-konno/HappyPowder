@@ -9,6 +9,11 @@
         = @task.id
     .row
       .col-2.column
+        = User.human_attribute_name :name
+      .col-10
+        = @task.user.name
+    .row
+      .col-2.column
         = Task.human_attribute_name :name
       .col-10
         = @task.name
