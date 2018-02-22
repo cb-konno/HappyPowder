@@ -2,9 +2,8 @@
 
 
 .container
-  = link_to t('submit.new'), new_user_path
 
-  %table
+  %table#index.table.table-striped
     %tr
       %th
         = User.human_attribute_name :id
