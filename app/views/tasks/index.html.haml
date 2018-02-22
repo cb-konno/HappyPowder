@@ -56,7 +56,7 @@
         %td
           = t("task.priority.#{task.priority}")
         %td
-          = task.user.name
+          = task.user.name if task.user
         %td
           = task.started_on
         %td
