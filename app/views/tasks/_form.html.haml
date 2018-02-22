@@ -5,41 +5,54 @@
       %ul
         - task.errors.full_messages.each do |message|
           %li= message
-
-= form_for task do |f|
-  %table#form
+.container
+  = form_for task do |f|
     - if params[:action] == 'edit'
-      %tr
-        %th.title= f.label :id
-        %td.input_disabled= task.id
-    %tr
-      %th= f.label :name
-      %td= f.text_field :name
-    %tr
-      %th= f.label :description
-      %td= f.text_area :description
-    %tr
-      %th= f.label :status
-      %td
+      .form-group.row
+        .col-2.col-form-label.column
+          = f.label :id, class: 'control-label'
+        .col-10
+          = f.text_field :id, class: 'form-control', readonly: true
+    .form-group.row
+      .col-2.col-form-label.column
+        = f.label :name, class: 'control-label'
+      .col-10
+        = f.text_field :name, class: 'form-control'
+    .form-group.row
+      .col-2.col-form-label.column
+        = f.label :description, class: 'control-label'
+      .col-10
+        = f.text_area :description, class: 'form-control'
+    .form-group.row
+      .col-2.col-form-label.column
+        = f.label :status, class: 'control-label'
+      .col-10
         = f.select :status,
           Task.statuses.keys.map { |k| [t("task.status.#{k}"), k] },
-          include_blank: t('select.default')
-    %tr
-      %th= f.label :priority
-      %td
+          { include_blank: t('select.default') },
+          class: 'form-control'
+    .form-group.row
+      .col-2.col-form-label.column
+        = f.label :priority, class: 'control-label'
+      .col-10
         = f.select :priority,
           Task.priorities.keys.map { |k| [t("task.priority.#{k}"), k] },
-          include_blank: t('select.default')
-    %tr
-      %th= f.label :started_on
-      %td= f.date_field(:started_on)
-    %tr
-      %th= f.label :ended_on
-      %td= f.date_field(:ended_on)
-    %tr
-    - if params[:action] == 'edit'
-      %td{ colspan:2, align: 'center' }
-        = f.submit t('submit.edit')
-    - else
-      %td{ colspan:2, align: 'center' }
-        = f.submit t('submit.new')
+          { include_blank: t('select.default') },
+          class: 'form-control'
+    .form-group.row
+      .col-2.col-form-label.column
+        = f.label :started_on, class: 'control-label'
+      .col-10
+        = f.date_field(:started_on, class: 'form-control')
+    .form-group.row
+      .col-2.col-form-label.column
+        = f.label :ended_on, class: 'control-label'
+      .col-10
+        = f.date_field(:ended_on, class: 'form-control')
+    .form-group.row
+      .col-2.col-form-label
+      .col-10.text-right
+        - if params[:action] == 'edit'
+          = f.submit t('submit.edit'), class: 'btn btn-primary'
+        - else
+          = f.submit t('submit.new'), class: 'btn btn-primary'

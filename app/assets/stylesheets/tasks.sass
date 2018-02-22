@@ -7,18 +7,15 @@ $purple: #eeefff
 $red: #ff0000
 
 header
-  margin: 0 auto
-  width: 960px
+  margin: 20px auto
+  width: 1080px
 
 h2
   color: $blue
 
 .errors
-  margin: 0 auto
-  padding:
-    left: 20px
-    right: 20px
-  width: 530px
+  width: 780px
+  margin: 50px auto
   color: $red
   h3
     padding-left: 10px
@@ -26,6 +23,8 @@ h2
     background: $red
     color: $white
   .messages
+    width: 780px
+    padding-top: 10px
     border:
       top: 1px solid $red
       left: 1px solid $red
@@ -33,13 +32,35 @@ h2
       bottom: 1px solid $red
 
 div
-  width: 860px
+  width: 1080px
   margin: 0 auto
-  &#pager
-    text-align: right
+  &.search
+    margin: 0 auto
+  &.container
+    width: 1080px
+    margin: 0 auto
+    .column
+      background: $blue
+      color: $white
+      vertical-align: middle
+      font-size: 16px
+      width: 80px
+    .field_with_errors
+      max-width: 870px
+
+  &#display
+    margin: 0 auto
+    .row
+      margin-bottom: 2px
+      background: #efefef
+
+  &.pager
+    margin: 5 auto
+
 table
+  width: 1080px
   margin: 0 auto
-  font-size: 12px
+  font-size: 14px
   border:
     collapse: separate
     spacing: 1px 10px
@@ -47,58 +68,37 @@ table
     background: $blue
     color: $white
     vertical-align: middle
+    font-size: 14px
     width: 80px
     overflow: visible
     position: relative
     font-weight: normal
-  td
-    background: $purple
 
   &#index
     th
-        a
-          color: $white
-          text-decoration: none
+      a
+        color: $white
+        text-decoration: none
     td
+      max-width: 160px
+      overflow: hidden
+      white-space: nowrap
+      text-overflow: ellipsis
       &.menu
-        width: 115px
-        padding: 10px
-      &.add
-        background: $white
-  &#form
-    th
-      width: 85px
-      padding:
-        right: 10px
-        left: 10px
-    td
-      background: $white
-      &.input_disabled
-        background: $purple
-        width: 400px
-  &#disp
-    th
-      width: 85px
-      padding:
-        right: 10px
-        left: 10px
-    td
-      width: 400px
-
-input
-  width: 400px
+        width: 120px
+        padding
+          left: 5px
+          right: 5px
 
 textarea
   width: 400px
   height: 200px
 
-select
-  width: 180px
-  text-align: right
-
 .flash
   border-radius: 20px
-  margin: 30px
+  margin:
+    top: 20px
+    bottom: 20px
 
 .success-message
   background: $blue
@@ -109,12 +109,7 @@ select
     bottom: 5px
 
 footer
-  margin: 0 auto
-  width: 960px
-  font-size: 12px
+  margin: 20px auto
+  width: 1080px
+  font-size: 14px
   text-align: right
-
-hr
-  border:
-    width: 0.5px
-    color: $blue
