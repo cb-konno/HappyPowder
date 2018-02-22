@@ -1,46 +1,48 @@
 = render 'layouts/header', page_title: @page_title
 
-= link_to t('submit.new'), new_user_path , class: 'btn btn-primary'
 
-%table
-  %tr
-    %th
-      = User.human_attribute_name :id
-    %th
-      = User.human_attribute_name :name
-    %th
-      = User.human_attribute_name :mail
-    %th
-      = User.human_attribute_name :password
-    %th
-      = User.human_attribute_name :created_at
-    %th
-      = User.human_attribute_name :updated_at
-    %th
-      = User.human_attribute_name :is_deleted
-    %th
-      = Task.human_attribute_name :action
-  - @users.each do |user|
+.container
+  = link_to t('submit.new'), new_user_path 
+
+  %table
     %tr
-      %td
-        = user.id
-      %td
-        = user.name
-      %td
-        = user.mail
-      %td
-        = user.password
-      %td
-        = user.created_at
-      %td
-        = user.updated_at
-      %td
-        = user.is_deleted
-      %td
-        = link_to t(:link_to_show), user_path(user)
-        ／
-        = link_to t(:link_to_edit), edit_user_path(user)
-        ／
-        = link_to t(:link_to_delete), user, method: :delete , data: { confirm: t('confirm.delete', target: User.model_name.human) }
+      %th
+        = User.human_attribute_name :id
+      %th
+        = User.human_attribute_name :name
+      %th
+        = User.human_attribute_name :mail
+      %th
+        = User.human_attribute_name :password
+      %th
+        = User.human_attribute_name :created_at
+      %th
+        = User.human_attribute_name :updated_at
+      %th
+        = User.human_attribute_name :is_deleted
+      %th
+        = Task.human_attribute_name :action
+    - @users.each do |user|
+      %tr
+        %td
+          = user.id
+        %td
+          = user.name
+        %td
+          = user.mail
+        %td
+          = user.password
+        %td
+          = user.created_at
+        %td
+          = user.updated_at
+        %td
+          = user.is_deleted
+        %td
+          = link_to t(:link_to_show), user_path(user)
+          ／
+          = link_to t(:link_to_edit), edit_user_path(user)
+          ／
+          = link_to t(:link_to_delete), user, method: :delete , data: { confirm: t('confirm.delete', target: User.model_name.human) }
 
 = render 'layouts/footer'
