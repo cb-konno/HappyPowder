@@ -51,4 +51,7 @@
           ／
           = link_to t(:link_to_delete), user, method: :delete , data: { confirm: t('confirm.delete', target: User.model_name.human) }
 
+  .pager
+    = paginate @users
+
 = render 'layouts/user/footer'

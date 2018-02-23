@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
   def index
     @q = User.ransack(params[:q])
-    @users = @q.result
+    @users = @q.result.page(params[:page]).per(5)
 
     @page_title = t('title_index', title: User.model_name.human)
   end
