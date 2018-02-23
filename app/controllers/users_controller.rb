@@ -2,8 +2,11 @@
 #
 class UsersController < ApplicationController
   before_action :user_find, only: [:edit, :show, :update, :destroy]
+
   def index
-    @users = User.ransack(params[:q]).result
+    @q = User.ransack(params[:q])
+    @users = @q.result
+
     @page_title = t('title_index', title: User.model_name.human)
   end
 

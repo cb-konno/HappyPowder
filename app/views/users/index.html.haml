@@ -2,6 +2,13 @@
 
 
 .container
+  #search
+    = search_form_for @q, html: { class: 'form-inline mb-sm-3' } do |f|
+      = f.label User.human_attribute_name :name, class: 'form-control mr-sm-2'
+      = f.text_field :name_cont, class: 'form-control mr-sm-2'
+      = f.label User.human_attribute_name :mail, class: 'form-control mr-sm-2'
+      = f.text_field :mail_cont, class: 'form-control mr-sm-2'
+      = f.submit t('submit.search'), class: 'btn btn-primary mr-sm-2'
 
   %table#index.table.table-striped
     %tr
