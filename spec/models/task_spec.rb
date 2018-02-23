@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: messages
+# Table name: tasks
 #
 #  id           :integer    not null, primary key
 #  name         :string     not null
