@@ -25,7 +25,6 @@ RSpec.feature '画面表示テスト', type: :feature do
     expect(find('div#display')).to have_content user.id
     expect(find('div#display')).to have_content user.name
     expect(find('div#display')).to have_content user.mail
-    expect(find('div#display')).to have_content user.password
 
   end
   it 'ユーザー更新画面を表示する' do
@@ -77,7 +76,6 @@ RSpec.feature '新規作成・更新・削除テスト', type: :feature do
     expect(find('header')).to have_content t('title_show', title: User.model_name.human)
     expect(find('div#display')).to have_content 'ゴリラ顔のマドンナ'
     expect(find('div#display')).to have_content 'gorira@face.com'
-    expect(find('div#display')).to have_content 'uhouhouho'
     accept_confirm { click_link t('link_to_delete') }
     expect(page).to have_content t('flash.destroy_success', target: User.model_name.human)
     expect(find('header')).to have_content t('title_index', title: User.model_name.human)

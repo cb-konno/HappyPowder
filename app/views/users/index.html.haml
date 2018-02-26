@@ -19,8 +19,6 @@
       %th
         = User.human_attribute_name :mail
       %th
-        = User.human_attribute_name :password
-      %th
         = User.human_attribute_name :created_at
       %th
         = User.human_attribute_name :updated_at
@@ -36,8 +34,6 @@
           = user.name
         %td
           = user.mail
-        %td
-          = user.password
         %td
           = user.created_at
         %td
