@@ -34,8 +34,8 @@
         = @user.updated_at
     .row
       .col-2.column
-        = User.human_attribute_name :is_deleted
+        = User.human_attribute_name :deleted
       .col-10
-        = @user.is_deleted
+        = @user.deleted
 
 = render 'layouts/user/footer', user: @user
