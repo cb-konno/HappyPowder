@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20180226050232) do
     t.string "name", limit: 50, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean "deleted"
+    t.boolean "deleted", default: false
     t.index ["mail"], name: "index_users_on_mail"
     t.index ["name"], name: "index_users_on_name"
   end
