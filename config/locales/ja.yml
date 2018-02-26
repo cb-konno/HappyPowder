@@ -52,8 +52,9 @@ ja:
   title_edit: '%{title}編集'
   title_delete: '%{title}削除'
 
-  label:
-    action: '操作'
+  index:
+    label:
+      action: '操作'
 
   flash:
     create_success: '%{target}を作成しました'
