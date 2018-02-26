@@ -35,9 +35,9 @@ $ heroku run rake db:migrate
 | カラム名 | データ型 | 備考 |
 |:-----------|:------------|:------------|
 | ID         | Primary     | 主キー       |
-| mail       | string(100) |             |
-| password   | string(16)  |             |
-| name       | string(50)  |             |
+| mail       | VARCHAR(100) |             |
+| password   | VARCHAR(16)  |             |
+| name       | VARCHAR(50)  |             |
 | created_at | timestamp   |             |
 | updated_at | timestamp   |             |
 | is_deleted | boolean     | 1:削除済     |
@@ -46,8 +46,8 @@ $ heroku run rake db:migrate
 | カラム名 | データ型 | 備考 |
 |:-----------|:------------|:------------|
 | ID         | Primary     | 主キー       |
-| name       | string(50)  |             |
-| description| string(2000)|             |
+| name       | VARCHAR(50)  |             |
+| description| VARCHAR(2000)|             |
 | priority   | ENUM        | high:高、middle：中、low：低          |
 | status     | ENUM        | created：未着手、doing：着手、done：完了|
 | started_on | date        |             |
@@ -60,7 +60,7 @@ $ heroku run rake db:migrate
 | カラム名 | データ型 | 備考 |
 |:-----------|:------------|:------------|
 | ID         | Primary     | 主キー       |
-| name       | string(20)  |             |
+| name       | VARCHAR(20)  |             |
 | is_deleted | boolean     | 1:削除済     |
 
 ###### （中間テーブル）タスクラベル(Task_Label)
