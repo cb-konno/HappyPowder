@@ -37,11 +37,7 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)
       flash[:success] = t('flash.update_success', target: User.model_name.human)
-      # @page_title = t('title_show', title: User.model_name.human)
-      # redirect_to user_path @user
-      @users = User.ransack(params[:q]).result
-      @page_title = t('title_index', title: User.model_name.human)
-      redirect_to users_path @users
+      redirect_to users_path
     else
       flash[:failed] = t('flash.update_failed', target: User.model_name.human)
       @page_title = t('title_edit', title: User.model_name.human)

@@ -44,7 +44,7 @@
       %th
         = sort_link @q, :created_at, Task.human_attribute_name(:created_at)
       %th
-        = t('label.action')
+        = t('index.label.action')
     - @tasks.each do |task|
       %tr
         %td
