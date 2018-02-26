@@ -46,11 +46,13 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    # @user.destroy
     @user.deleted = true
-    @user.save
-    flash[:success] = t('flash.destroy_success', target: User.model_name.human)
-    redirect_to users_path
+    if @user.save
+      flash[:success] = t('flash.destroy_success', target: User.model_name.human)
+    else
+      flash[:failed] = t('flash.destroy_failed', target: User.model_name.human)
+    end
+    redirect_to user_path
   end
 
   private
