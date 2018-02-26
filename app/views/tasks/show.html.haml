@@ -11,7 +11,7 @@
       .col-2.column
         = User.human_attribute_name :name
       .col-10
-        = @task.user.name
+        = @task.user.name if @task.user
     .row
       .col-2.column
         = Task.human_attribute_name :name
