@@ -75,5 +75,16 @@ RSpec.describe User, type: :model do
         expect(user).not_to be_valid
       end
     end
+
+    describe '重複メールアドレス確認のテスト' do
+      before do
+        User.create(name: 'サカナ顔の王子', mail: 'same-mail@adress.com', password: 'kaisendon')
+      end
+
+      it 'メールアドレスの重複で登録できないこと' do
+        user = User.new(name: 'サカナ顔の王子', mail: 'same-mail@adress.com', password: 'kaisendon')
+        expect(user).not_to be_valid
+      end
+    end
   end
 end
