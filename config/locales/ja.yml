@@ -102,6 +102,7 @@ ja:
         id: 'ID'
         mail: 'メールアドレス'
         password: 'パスワード'
+        password_confirmation: 'パスワード（確認用）'
         name: 'ユーザー名'
         created_at: '作成日時'
         updated_at: '更新日時'
@@ -115,3 +116,4 @@ ja:
       too_long: 'は%{count}文字以内で入力してください'
       mail_format: 'を正しい形式で入力してください'
       taken: 'は既に登録済みです'
+      confirmation: 'と%{attribute}の入力が一致しません'

@@ -10,29 +10,35 @@
   = form_for user do |f|
     - if params[:action] == 'edit'
       .form-group.row
-        .col-2.col-form-label.column
+        .col-3.col-form-label.column
           =f.label :id, class: 'control-label'
-        .col-10
+        .col-9
           = f.text_field :id, class: 'form-control', readonly: true
     .form-group.row
-      .col-2.col-form-label.column
+      .col-3.col-form-label.column
         =f.label :name, class: 'control-label'
-      .col-10
+      .col-9
         = f.text_field :name, class: 'form-control'
     .form-group.row
-      .col-2.col-form-label.column
+      .col-3.col-form-label.column
         =f.label :mail, class: 'control-label'
-      .col-10
+      .col-9
         = f.text_field :mail, class: 'form-control'
     .form-group.row
-      .col-2.col-form-label.column
+      .col-3.col-form-label.column
         =f.label :password, class: 'control-label'
-      .col-10
-        = f.text_field :password,
-          { class: 'form-control', type: 'password' }
+      .col-9
+        = f.password_field :password,
+          { class: 'form-control' }
     .form-group.row
-      .col-2.col-form-label
-      .col-10.text-right
+      .col-3.col-form-label.column
+        =f.label :password_confirmation, class: 'control-label'
+      .col-9
+        = f.password_field :password_confirmation,
+          { class: 'form-control' }
+    .form-group.row
+      .col-3.col-form-label
+      .col-9.text-right
         = f.text_field :is_deleted,
           { class: 'form-control', type: 'hidden', value: false }
         - if params[:action] == 'edit'
