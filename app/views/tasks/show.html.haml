@@ -1,4 +1,4 @@
-= render 'layouts/task/header', page_title: @page_title
+= render 'layouts/header', page_title: @page_title
 
 .container
   #display
@@ -7,6 +7,11 @@
         = Task.human_attribute_name :id
       .col-10
         = @task.id
+    .row
+      .col-2.column
+        = User.human_attribute_name :name
+      .col-10
+        = @task.user.name if @task.user
     .row
       .col-2.column
         = Task.human_attribute_name :name

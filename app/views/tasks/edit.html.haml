@@ -1,5 +1,5 @@
-= render 'layouts/task/header', page_title: @page_title
+= render 'layouts/header', page_title: @page_title
 
-= render 'tasks/form', task: @task
+= render 'tasks/form', task: @task, users: @users
 
 = render 'layouts/task/footer', task: @task

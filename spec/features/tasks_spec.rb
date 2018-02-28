@@ -19,10 +19,14 @@ RSpec.feature 'リンクのテスト', type: :feature do
 end
 
 RSpec.feature 'タスクの新規作成テスト', type: :feature do
+  background do
+    User.create!(id: 5, name: 'ゴリラ顔のマドンナ', mail: 'gorira@face.com', password: 'uhouhouho')
+  end
 
   it 'タスクの登録をテストします' do
     visit new_task_path
     fill_in 'task[name]', with: 'テストで追加する課題の名前'
+    select 'ゴリラ顔のマドンナ', from: 'task[user_id]'
     select t('task.status.created'), from: 'task[status]'
     select t('task.priority.middle'), from: 'task[priority]'
     fill_in 'task[started_on]', with: '2018-02-01'
@@ -40,7 +44,8 @@ end
 
 RSpec.feature 'タスクの詳細画面表示テスト', type: :feature do
   background do
-    Task.create!(id: 1, name: 'パン工場に行く', description: 'アンパンマンの顔を焼く', status: 'created', priority: 'high')
+    User.create!(id: 5, name: 'ゴリラ顔のマドンナ', mail: 'gorira@face.com', password: 'uhouhouho')
+    Task.create!(id: 1, name: 'パン工場に行く', description: 'アンパンマンの顔を焼く', status: 'created', priority: 'high', user_id: 5)
   end
   scenario 'タスク詳細画面を表示する' do
     task = Task.find(1)
@@ -51,6 +56,7 @@ RSpec.feature 'タスクの詳細画面表示テスト', type: :feature do
     disp = find('div#display')
     expect(disp).to have_content task.id
     expect(disp).to have_content task.name
+    expect(disp).to have_content task.user.name
     expect(disp).to have_content task.description
     expect(disp).to have_content t('task.status.created')
     expect(disp).to have_content t('task.priority.high')
@@ -61,7 +67,9 @@ end
 RSpec.feature 'タスクを更新するテスト', type: :feature do
 
   background do
-    Task.create!(id: 1, name: '更新前のタスク名', description: '更新する前のタスクの説明文', status: 'created', priority: 'middle')
+    User.create!(id: 5, name: 'ゴリラ顔のマドンナ', mail: 'gorira@face.com', password: 'uhouhouho')
+    User.create!(id: 9, name: 'サル顔の貴公子', mail: 'monkey@face.com', password: 'ukyaukyaukya')
+    Task.create!(id: 1, name: '更新前のタスク名', description: '更新する前のタスクの説明文', status: 'created', priority: 'middle', user_id: 5)
   end
 
   scenario 'タスクの更新画面を表示する' do
@@ -74,6 +82,8 @@ RSpec.feature 'タスクを更新するテスト', type: :feature do
     expect(input.value).to eq '1'
     input = find('input#task_name')
     expect(input.value).to eq task.name
+    select = find('select#task_user_id')
+    expect(select.value).to eq '5'
     textarea = find('textarea#task_description')
     expect(textarea.value).to eq task.description
     select = find('select#task_status')
@@ -87,6 +97,7 @@ RSpec.feature 'タスクを更新するテスト', type: :feature do
     visit edit_task_path(task)
 
     fill_in 'task[name]', with: '更新後のタスク'
+    select 'サル顔の貴公子', from: 'task[user_id]'
     fill_in 'task[description]', with: '更新した後のタスクの説明文'
     select t('task.status.doing'), from: 'task[status]'
     select t('task.priority.low'), from: 'task[priority]'
@@ -100,6 +111,7 @@ RSpec.feature 'タスクを更新するテスト', type: :feature do
     expect(header).to have_content t('title_show', title: Task.model_name.human)
     disp = find('div#display')
     expect(disp).to have_content '1'
+    expect(disp).to have_content 'サル顔の貴公子'
     expect(disp).to have_content '更新後のタスク'
     expect(disp).to have_content '更新した後のタスクの説明文'
     expect(disp).to have_content t('task.status.doing')
@@ -111,7 +123,8 @@ end
 
 RSpec.feature 'タスクを削除するテスト', type: :feature, js: true do
   background do
-    Task.create!(id: 1, name: '削除するタスク名', description: '削除するタスクの説明文', status: 'created', priority: 'middle')
+    User.create!(id: 9, name: 'サル顔の貴公子', mail: 'monkey@face.com', password: 'ukyaukyaukya')
+    Task.create!(id: 1, name: '削除するタスク名', description: '削除するタスクの説明文', status: 'created', priority: 'middle', user_id: 9)
     task = Task.find(1)
     visit task_path(task)
 
@@ -136,6 +149,9 @@ end
 
 RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
   background do
+    User.create!(id: 1, name: 'ウマ面のプリンセス', mail: 'horse@face.com', password: 'hihiiiiin')
+    User.create!(id: 5, name: 'ゴリラ顔のマドンナ', mail: 'gorira@face.com', password: 'uhouhouho')
+    User.create!(id: 9, name: 'サル顔の貴公子', mail: 'monkey@face.com', password: 'ukyaukyaukya')
     Task.create!(
       id: 1,
       name: '明治のタスク',
@@ -144,7 +160,8 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       priority: 'low',
       ended_on: '2000-01-01',
       created_at: '1900-01-01 00:51:00',
-      updated_at: '2017-11-01 03:34:50'
+      updated_at: '2017-11-01 03:34:50',
+      user_id: 1
     )
     Task.create!(
       id: 2,
@@ -154,7 +171,8 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       priority: 'high',
       ended_on: '2017-10-18',
       created_at: '1982-06-09 12:00:00',
-      updated_at: '2016-12-01 09:21:45'
+      updated_at: '2016-12-01 09:21:45',
+      user_id: 5
     )
     Task.create!(
       id: 3,
@@ -164,7 +182,8 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       priority: 'middle',
       ended_on: '2013-04-24',
       created_at: '2010-12-12 00:15:33',
-      updated_at: '2018-02-01 23:43:20')
+      updated_at: '2018-02-01 23:43:20',
+      user_id: 9)
   end
 
   describe '作成日時のソートテスト' do
@@ -175,10 +194,10 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
 
-      expect(data.map { |e| [e[0], e[1], e[2], e[3]] }).to eq [
-        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle')],
-        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high')],
-        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low')]]
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4]] }).to eq [
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'サル顔の貴公子'],
+        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), 'ゴリラ顔のマドンナ'],
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ウマ面のプリンセス']]
     end
 
     it '昇順で表示する' do
@@ -188,10 +207,10 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
 
-      expect(data.map { |e| [e[0], e[1], e[2], e[3]] }).to eq [
-        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low')],
-        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high')],
-        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle')]]
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4]] }).to eq [
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ウマ面のプリンセス'],
+        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), 'ゴリラ顔のマドンナ'],
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'サル顔の貴公子']]
     end
   end
 
@@ -203,10 +222,10 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
 
-      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[5]] }).to eq [
-        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
-        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
-        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
+        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), 'ゴリラ顔のマドンナ', '2017/10/18'],
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'サル顔の貴公子', '2013/04/24'],
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ウマ面のプリンセス', '2000/01/01']]
     end
 
     it '昇順で表示する' do
@@ -216,24 +235,24 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
 
-      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[5]] }).to eq [
-        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01'],
-        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
-        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18']]
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ウマ面のプリンセス', '2000/01/01'],
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'サル顔の貴公子', '2013/04/24'],
+        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), 'ゴリラ顔のマドンナ', '2017/10/18']]
     end
   end
 
-  describe '優先度でソートするテスt' do
+  describe '優先度でソートするテスト' do
     it '降順でテストする' do
       visit tasks_path('q[s]': 'priority desc')
 
       header = find('header')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
-      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[5]] }).to eq [
-        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01'],
-        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
-        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18']]
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ウマ面のプリンセス', '2000/01/01'],
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'サル顔の貴公子', '2013/04/24'],
+        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), 'ゴリラ顔のマドンナ', '2017/10/18']]
     end
 
     it '昇順でテストする' do
@@ -242,10 +261,10 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       header = find('header')
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
-      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[5]] }).to eq [
-        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
-        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
-        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
+        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), 'ゴリラ顔のマドンナ', '2017/10/18'],
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'サル顔の貴公子', '2013/04/24'],
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ウマ面のプリンセス', '2000/01/01']]
     end
   end
 
@@ -257,10 +276,10 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
 
-      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[5]] }).to eq [
-        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
-        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
-        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'サル顔の貴公子', '2013/04/24'],
+        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), 'ゴリラ顔のマドンナ', '2017/10/18'],
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ウマ面のプリンセス', '2000/01/01']]
     end
 
     it '存在しないオーダーでソートする' do
@@ -270,20 +289,24 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
 
-      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[5]] }).to eq [
-        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), '2013/04/24'],
-        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), '2017/10/18'],
-        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), '2000/01/01']]
+      expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'サル顔の貴公子', '2013/04/24'],
+        ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), 'ゴリラ顔のマドンナ', '2017/10/18'],
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ウマ面のプリンセス', '2000/01/01']]
     end
   end
 
 end
 
 RSpec.feature 'バリデーションのテスト', type: :feature do
+  background do
+    User.create!(id: 5, name: 'ゴリラ顔のマドンナ', mail: 'gorira@face.com', password: 'uhouhouho')
+  end
   describe '新規作成時のバリデーション' do
     it '必須項目のテスト' do
       visit new_task_path
       fill_in 'task[name]', with: ''
+      select t('select.default'), from: 'task[user_id]'
       select t('select.default'), from: 'task[status]'
       select t('select.default'), from: 'task[priority]'
       click_button t('submit.new')
@@ -291,11 +314,12 @@ RSpec.feature 'バリデーションのテスト', type: :feature do
       header = find('header')
       expect(header).to have_content t('title_new', title: Task.model_name.human)
       within('.errors') do
-        expect(page.find('h3')).to have_content '3件のエラーがあります'
+        expect(page.find('h3')).to have_content '4件のエラーがあります'
         expect(page.find('.messages').find('ul').all('li').map { |li| li.text }).to have_content [
           'タスク名 を入力してください',
           'ステータス を選択してください',
-          '優先度 を選択してください',]
+          '優先度 を選択してください',
+          'ユーザー を選択してください']
       end
     end
 
@@ -303,6 +327,7 @@ RSpec.feature 'バリデーションのテスト', type: :feature do
       visit new_task_path
       fill_in 'task[name]', with: 'a' * 51
       fill_in 'task[description]', with: 'あ' * 2001
+      select 'ゴリラ顔のマドンナ', from: 'task[user_id]'
       select t('task.status.doing'), from: 'task[status]'
       select t('task.priority.low'), from: 'task[priority]'
       click_button t('submit.new')
@@ -320,13 +345,14 @@ RSpec.feature 'バリデーションのテスト', type: :feature do
 
   describe '更新時のバリデーション' do
     background do
-      Task.create!(id: 1, name: '更新前のタスク名', description: '更新する前のタスクの説明文', status: 'created', priority: 'middle')
+      Task.create!(id: 1, name: '更新前のタスク名', description: '更新する前のタスクの説明文', status: 'created', priority: 'middle', user_id: 5)
     end
 
     it '必須項目のテスト' do
       task = Task.find(1)
       visit edit_task_path(task)
       fill_in 'task[name]', with: ''
+      select t('select.default'), from: 'task[user_id]'
       select t('select.default'), from: 'task[status]'
       select t('select.default'), from: 'task[priority]'
       click_button t('submit.edit')
@@ -334,11 +360,12 @@ RSpec.feature 'バリデーションのテスト', type: :feature do
       header = find('header')
       expect(header).to have_content t('title_edit', title: Task.model_name.human)
       within('.errors') do
-        expect(page.find('h3')).to have_content '3件のエラーがあります'
+        expect(page.find('h3')).to have_content '4件のエラーがあります'
         expect(page.find('.messages').find('ul').all('li').map { |li| li.text }).to have_content [
           'タスク名 を入力してください',
           'ステータス を選択してください',
-          '優先度 を選択してください',]
+          '優先度 を選択してください',
+          'ユーザー を選択してください']
       end
     end
 
@@ -347,6 +374,7 @@ RSpec.feature 'バリデーションのテスト', type: :feature do
       visit edit_task_path(task)
       fill_in 'task[name]', with: 'a' * 51
       fill_in 'task[description]', with: 'あ' * 2001
+      select 'ゴリラ顔のマドンナ', from: 'task[user_id]'
       select t('task.status.doing'), from: 'task[status]'
       select t('task.priority.low'), from: 'task[priority]'
       click_button t('submit.edit')

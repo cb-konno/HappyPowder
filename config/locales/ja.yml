@@ -52,6 +52,10 @@ ja:
   title_edit: '%{title}編集'
   title_delete: '%{title}削除'
 
+  index:
+    label:
+      action: '操作'
+
   flash:
     create_success: '%{target}を作成しました'
     update_success: '%{target}を更新しました'
@@ -81,6 +85,7 @@ ja:
   activerecord:
     models:
       task: 'タスク'
+      user: 'ユーザー'
     attributes:
       task:
         id: 'ID'
@@ -90,9 +95,18 @@ ja:
         priority: '優先度'
         started_on: '開始日'
         ended_on: '終了日'
-        action: '操作'
         created_at: '作成日時'
         updated_at: '更新日時'
+        user: 'ユーザー'
+      user:
+        id: 'ID'
+        mail: 'メールアドレス'
+        password: 'パスワード'
+        password_confirmation: 'パスワード（確認用）'
+        name: 'ユーザー名'
+        created_at: '作成日時'
+        updated_at: '更新日時'
+        deleted: '削除済'
 
   errors:
     messages:
@@ -100,3 +114,6 @@ ja:
       blank: 'を入力してください'
       select: 'を選択してください'
       too_long: 'は%{count}文字以内で入力してください'
+      mail_format: 'を正しい形式で入力してください'
+      taken: 'は既に登録済みです'
+      confirmation: 'と%{attribute}の入力が一致しません'

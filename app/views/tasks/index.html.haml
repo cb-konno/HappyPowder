@@ -1,4 +1,4 @@
-= render 'layouts/task/header', page_title: @page_title
+= render 'layouts/header', page_title: @page_title
 
 .container
   #search
@@ -36,13 +36,15 @@
       %th
         = sort_link @q, :priority, Task.human_attribute_name(:priority)
       %th
+        = Task.human_attribute_name :user
+      %th
         = Task.human_attribute_name :started_on
       %th
         = sort_link @q, :ended_on, Task.human_attribute_name(:ended_on)
       %th
         = sort_link @q, :created_at, Task.human_attribute_name(:created_at)
       %th
-        = Task.human_attribute_name :action
+        = t('index.label.action')
     - @tasks.each do |task|
       %tr
         %td
@@ -53,6 +55,8 @@
           = t("task.status.#{task.status}")
         %td
           = t("task.priority.#{task.priority}")
+        %td
+          = task.user.name if task.user
         %td
           = task.started_on
         %td
@@ -66,7 +70,7 @@
           ／
           = link_to t(:link_to_delete), task, method: :delete , data: { confirm: t('confirm.delete', target: Task.model_name.human) }
 
-.pager
-  = paginate @tasks
+  .pager
+    = paginate @tasks
 
 = render 'layouts/task/footer'

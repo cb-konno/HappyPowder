@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: messages
+# Table name: tasks
 #
 #  id           :integer    not null, primary key
 #  name         :string     not null
@@ -31,7 +31,8 @@ RSpec.describe Task, type: :model do
       status: 'done',
       priority: 'low',
       started_on: '1999-12-31',
-      ended_on: '2000-01-01'
+      ended_on: '2000-01-01',
+      user_id: 1
     )
     expect(task.id).to eq 1
     expect(task.name).to eq 'タスク名'
@@ -60,16 +61,19 @@ RSpec.describe Task, type: :model do
       end
 
       describe '入力制限テスト' do
+        before do
+          User.create!(id: 1, name: 'ウマ面のプリンセス', mail: 'horse@face.com', password: 'hihiiiiin')
+        end
         it 'タスク名は50文字以内であること' do
-          task = Task.new(name: 'じ' * 50, priority: 'high', status: 'created')
+          task = Task.new(name: 'じ' * 50, priority: 'high', status: 'created', user_id: 1)
           expect(task).to be_valid
-          task = Task.new(name: '字' * 51, priority: 'high', status: 'created')
+          task = Task.new(name: '字' * 51, priority: 'high', status: 'created', user_id: 1)
           expect(task).not_to be_valid
         end
         it '説明は2000文字以内であること' do
-          task = Task.new(name: 'something task title', description: 'じ' * 2000, priority: 'high', status: 'created')
+          task = Task.new(name: 'something task title', description: 'じ' * 2000, priority: 'high', status: 'created', user_id: 1)
           expect(task).to be_valid
-          task = Task.new(name: 'something task title', description: '字' * 2001, priority: 'high', status: 'created')
+          task = Task.new(name: 'something task title', description: '字' * 2001, priority: 'high', status: 'created', user_id: 1)
           expect(task).not_to be_valid
         end
       end

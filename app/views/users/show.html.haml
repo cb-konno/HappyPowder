@@ -1,0 +1,36 @@
+= render 'layouts/header', page_title: @page_title
+
+.container
+  #display
+    .row
+      .col-2.column
+        = User.human_attribute_name :id
+      .col-10
+        = @user.id
+    .row
+      .col-2.column
+        = User.human_attribute_name :name
+      .col-10
+        = @user.name
+    .row
+      .col-2.column
+        = User.human_attribute_name :mail
+      .col-10
+        = @user.mail
+    .row
+      .col-2.column
+        = User.human_attribute_name :created_at
+      .col-10
+        = @user.created_at
+    .row
+      .col-2.column
+        = User.human_attribute_name :updated_at
+      .col-10
+        = @user.updated_at
+    .row
+      .col-2.column
+        = User.human_attribute_name :deleted
+      .col-10
+        = @user.deleted
+
+= render 'layouts/user/footer', user: @user

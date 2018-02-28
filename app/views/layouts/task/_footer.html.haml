@@ -1,10 +1,10 @@
 %footer
   %hr
 
-  = link_to t(:link_to_index), tasks_path
+  - unless params[:action] == 'index'
+    = link_to t(:link_to_index), tasks_path
 
   - if params[:action] == 'index'
-    ／
     = link_to t(:link_to_new), new_task_path
 
   - if params[:action] == 'show'
@@ -13,4 +13,4 @@
 
   - if params[:action] == 'show' || params[:action] == 'edit'
     ／
-    = link_to t(:link_to_delete), task, method: :delete , data: { confirm: t('confirm.delete', target: Task.model_name.human) }
+    = link_to t(:link_to_delete), task, method: :delete , data: { confirm: t('confirm.delete', target: task.model_name.human) }

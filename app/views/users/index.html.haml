@@ -1,0 +1,53 @@
+= render 'layouts/header', page_title: @page_title
+
+
+.container
+  #search
+    = search_form_for @q, html: { class: 'form-inline mb-sm-3' } do |f|
+      = f.label User.human_attribute_name :name, class: 'form-control mr-sm-2'
+      = f.text_field :name_cont, class: 'form-control mr-sm-2'
+      = f.label User.human_attribute_name :mail, class: 'form-control mr-sm-2'
+      = f.text_field :mail_cont, class: 'form-control mr-sm-2'
+      = f.submit t('submit.search'), class: 'btn btn-primary mr-sm-2'
+
+  %table#index.table.table-striped
+    %tr
+      %th
+        = User.human_attribute_name :id
+      %th
+        = User.human_attribute_name :name
+      %th
+        = User.human_attribute_name :mail
+      %th
+        = User.human_attribute_name :created_at
+      %th
+        = User.human_attribute_name :updated_at
+      %th
+        = User.human_attribute_name :deleted
+      %th
+        = t('index.label.action')
+    - @users.each do |user|
+      %tr
+        %td
+          = user.id
+        %td
+          = user.name
+        %td
+          = user.mail
+        %td
+          = user.created_at
+        %td
+          = user.updated_at
+        %td
+          = user.deleted
+        %td
+          = link_to t(:link_to_show), user_path(user)
+          ／
+          = link_to t(:link_to_edit), edit_user_path(user)
+          ／
+          = link_to t(:link_to_delete), user, method: :delete , data: { confirm: t('confirm.delete', target: User.model_name.human) }
+
+  .pager
+    = paginate @users
+
+= render 'layouts/user/footer'
