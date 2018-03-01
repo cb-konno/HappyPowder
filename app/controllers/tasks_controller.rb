@@ -1,10 +1,20 @@
 # TaskController
 #
 class TasksController < ApplicationController
+  before_action :authenticate
   before_action :task_find, only: [:show, :edit, :update, :destroy]
   before_action :user_find_all, only: [:new, :create, :edit, :update]
 
   def index
+  #   params[:q] = { user_id_eq: current_user.id} if logged_in
+
+    # params[:q][:user_id_eq] =current_user.id if logged_in
+    if params[:q].present?
+      params[:q][:user_id_eq] = current_user.id if logged_in
+    else
+      params[:q] = { user_id_eq: current_user.id } if logged_in
+    end
+
     @q = Task.ransack_with_check_params(params)
     @tasks = @q.result.includes(:user).page(params[:page]).per(5)
     @page_title = t('title_index', title: Task.model_name.human)
@@ -54,6 +64,9 @@ class TasksController < ApplicationController
 
 
   private
+    def authenticate
+      redirect_to login_path unless logged_in
+    end
 
     def task_find
       @task = Task.find(params[:id])

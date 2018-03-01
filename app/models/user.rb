@@ -14,4 +14,8 @@ class User < ApplicationRecord
   validates :name,
     presence: true,
     length: { maximum: 50, message: I18n.t('errors.messages.too_long', count: 50) }
+
+  def User.new_token
+    SecureRandom.urlsafe_base64
+  end
 end
