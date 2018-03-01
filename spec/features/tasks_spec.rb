@@ -1,6 +1,9 @@
 require 'features_helper'
 
 RSpec.feature 'リンクのテスト', type: :feature do
+  background do
+    login
+  end
 
   it 'トップページから新規作成ページに遷移する' do
     visit root_path
@@ -20,7 +23,7 @@ end
 
 RSpec.feature 'タスクの新規作成テスト', type: :feature do
   background do
-    User.create!(id: 5, name: 'ゴリラ顔のマドンナ', mail: 'gorira@face.com', password: 'uhouhouho')
+    login
   end
 
   it 'タスクの登録をテストします' do
@@ -44,7 +47,7 @@ end
 
 RSpec.feature 'タスクの詳細画面表示テスト', type: :feature do
   background do
-    User.create!(id: 5, name: 'ゴリラ顔のマドンナ', mail: 'gorira@face.com', password: 'uhouhouho')
+    login
     Task.create!(id: 1, name: 'パン工場に行く', description: 'アンパンマンの顔を焼く', status: 'created', priority: 'high', user_id: 5)
   end
   scenario 'タスク詳細画面を表示する' do
@@ -65,17 +68,14 @@ RSpec.feature 'タスクの詳細画面表示テスト', type: :feature do
 end
 
 RSpec.feature 'タスクを更新するテスト', type: :feature do
-
   background do
-    User.create!(id: 5, name: 'ゴリラ顔のマドンナ', mail: 'gorira@face.com', password: 'uhouhouho')
-    User.create!(id: 9, name: 'サル顔の貴公子', mail: 'monkey@face.com', password: 'ukyaukyaukya')
+    login
     Task.create!(id: 1, name: '更新前のタスク名', description: '更新する前のタスクの説明文', status: 'created', priority: 'middle', user_id: 5)
   end
 
   scenario 'タスクの更新画面を表示する' do
     task = Task.find(1)
     visit edit_task_path(task)
-
     header = find('header')
     expect(header).to have_content t('title_edit', title: Task.model_name.human)
     input = find('input#task_id')
@@ -97,7 +97,7 @@ RSpec.feature 'タスクを更新するテスト', type: :feature do
     visit edit_task_path(task)
 
     fill_in 'task[name]', with: '更新後のタスク'
-    select 'サル顔の貴公子', from: 'task[user_id]'
+    select 'ゴリラ顔のマドンナ', from: 'task[user_id]'
     fill_in 'task[description]', with: '更新した後のタスクの説明文'
     select t('task.status.doing'), from: 'task[status]'
     select t('task.priority.low'), from: 'task[priority]'
@@ -111,7 +111,7 @@ RSpec.feature 'タスクを更新するテスト', type: :feature do
     expect(header).to have_content t('title_show', title: Task.model_name.human)
     disp = find('div#display')
     expect(disp).to have_content '1'
-    expect(disp).to have_content 'サル顔の貴公子'
+    expect(disp).to have_content 'ゴリラ顔のマドンナ'
     expect(disp).to have_content '更新後のタスク'
     expect(disp).to have_content '更新した後のタスクの説明文'
     expect(disp).to have_content t('task.status.doing')
@@ -123,11 +123,10 @@ end
 
 RSpec.feature 'タスクを削除するテスト', type: :feature, js: true do
   background do
-    User.create!(id: 9, name: 'サル顔の貴公子', mail: 'monkey@face.com', password: 'ukyaukyaukya')
-    Task.create!(id: 1, name: '削除するタスク名', description: '削除するタスクの説明文', status: 'created', priority: 'middle', user_id: 9)
+    login
+    Task.create!(id: 1, name: '削除するタスク名', description: '削除するタスクの説明文', status: 'created', priority: 'middle', user_id: 5)
     task = Task.find(1)
     visit task_path(task)
-
   end
 
   it 'タスクを削除する' do
@@ -149,9 +148,10 @@ end
 
 RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
   background do
-    User.create!(id: 1, name: 'ウマ面のプリンセス', mail: 'horse@face.com', password: 'hihiiiiin')
-    User.create!(id: 5, name: 'ゴリラ顔のマドンナ', mail: 'gorira@face.com', password: 'uhouhouho')
-    User.create!(id: 9, name: 'サル顔の貴公子', mail: 'monkey@face.com', password: 'ukyaukyaukya')
+    login
+    # User.create!(id: 1, name: 'ウマ面のプリンセス', mail: 'horse@face.com', password: 'hihiiiiin')
+    # User.create!(id: 5, name: 'ゴリラ顔のマドンナ', mail: 'gorira@face.com', password: 'uhouhouho')
+    # User.create!(id: 9, name: 'サル顔の貴公子', mail: 'monkey@face.com', password: 'ukyaukyaukya')
     Task.create!(
       id: 1,
       name: '明治のタスク',
@@ -161,7 +161,7 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       ended_on: '2000-01-01',
       created_at: '1900-01-01 00:51:00',
       updated_at: '2017-11-01 03:34:50',
-      user_id: 1
+      user_id: 5
     )
     Task.create!(
       id: 2,
@@ -183,7 +183,7 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       ended_on: '2013-04-24',
       created_at: '2010-12-12 00:15:33',
       updated_at: '2018-02-01 23:43:20',
-      user_id: 9)
+      user_id: 5)
   end
 
   describe '作成日時のソートテスト' do
@@ -195,9 +195,9 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       data = parse_data
 
       expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4]] }).to eq [
-        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'サル顔の貴公子'],
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'ゴリラ顔のマドンナ'],
         ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), 'ゴリラ顔のマドンナ'],
-        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ウマ面のプリンセス']]
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ゴリラ顔のマドンナ']]
     end
 
     it '昇順で表示する' do
@@ -208,9 +208,9 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       data = parse_data
 
       expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4]] }).to eq [
-        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ウマ面のプリンセス'],
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ゴリラ顔のマドンナ'],
         ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), 'ゴリラ顔のマドンナ'],
-        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'サル顔の貴公子']]
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'ゴリラ顔のマドンナ']]
     end
   end
 
@@ -224,8 +224,8 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
 
       expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
         ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), 'ゴリラ顔のマドンナ', '2017/10/18'],
-        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'サル顔の貴公子', '2013/04/24'],
-        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ウマ面のプリンセス', '2000/01/01']]
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'ゴリラ顔のマドンナ', '2013/04/24'],
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ゴリラ顔のマドンナ', '2000/01/01']]
     end
 
     it '昇順で表示する' do
@@ -236,8 +236,8 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       data = parse_data
 
       expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
-        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ウマ面のプリンセス', '2000/01/01'],
-        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'サル顔の貴公子', '2013/04/24'],
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ゴリラ顔のマドンナ', '2000/01/01'],
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'ゴリラ顔のマドンナ', '2013/04/24'],
         ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), 'ゴリラ顔のマドンナ', '2017/10/18']]
     end
   end
@@ -250,8 +250,8 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       expect(header).to have_content t('title_index', title: Task.model_name.human)
       data = parse_data
       expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
-        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ウマ面のプリンセス', '2000/01/01'],
-        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'サル顔の貴公子', '2013/04/24'],
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ゴリラ顔のマドンナ', '2000/01/01'],
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'ゴリラ顔のマドンナ', '2013/04/24'],
         ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), 'ゴリラ顔のマドンナ', '2017/10/18']]
     end
 
@@ -263,8 +263,8 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       data = parse_data
       expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
         ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), 'ゴリラ顔のマドンナ', '2017/10/18'],
-        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'サル顔の貴公子', '2013/04/24'],
-        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ウマ面のプリンセス', '2000/01/01']]
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'ゴリラ顔のマドンナ', '2013/04/24'],
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ゴリラ顔のマドンナ', '2000/01/01']]
     end
   end
 
@@ -277,9 +277,9 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       data = parse_data
 
       expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
-        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'サル顔の貴公子', '2013/04/24'],
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'ゴリラ顔のマドンナ', '2013/04/24'],
         ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), 'ゴリラ顔のマドンナ', '2017/10/18'],
-        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ウマ面のプリンセス', '2000/01/01']]
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ゴリラ顔のマドンナ', '2000/01/01']]
     end
 
     it '存在しないオーダーでソートする' do
@@ -290,9 +290,9 @@ RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
       data = parse_data
 
       expect(data.map { |e| [e[0], e[1], e[2], e[3], e[4], e[6]] }).to eq [
-        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'サル顔の貴公子', '2013/04/24'],
+        ['3', '平成のタスク', t('task.status.doing'), t('task.priority.middle'), 'ゴリラ顔のマドンナ', '2013/04/24'],
         ['2', '昭和のタスク', t('task.status.created'), t('task.priority.high'), 'ゴリラ顔のマドンナ', '2017/10/18'],
-        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ウマ面のプリンセス', '2000/01/01']]
+        ['1', '明治のタスク', t('task.status.done'), t('task.priority.low'), 'ゴリラ顔のマドンナ', '2000/01/01']]
     end
   end
 
@@ -300,7 +300,7 @@ end
 
 RSpec.feature 'バリデーションのテスト', type: :feature do
   background do
-    User.create!(id: 5, name: 'ゴリラ顔のマドンナ', mail: 'gorira@face.com', password: 'uhouhouho')
+    login
   end
   describe '新規作成時のバリデーション' do
     it '必須項目のテスト' do
@@ -393,52 +393,100 @@ end
 
 RSpec.feature '一覧のページャーのテスト', type: :feature do
   background do
-    records = []
+    login
     55.times do |i|
-      records[i] = Task.create!(id: i,  name: 'タスク' + i, status: 'created', priority: 'middle', created_at: Time.now)
+      Task.create!(id: i,  name: 'タスク', status: 'created', priority: 'middle', created_at: Time.now, user_id: 5)
     end
+  end
 
-    it 'ページャーのテスト（番号）' do
-      visit tasks_path
-      header = find('header')
-      expect(header).to have_content t('title_index', title: Task.model_name.human)
-      data = parse_data
-      expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
+  it 'ページャーのテスト（番号）' do
+    visit tasks_path
+    header = find('header')
+    expect(header).to have_content t('title_index', title: Task.model_name.human)
+    data = parse_data
+    expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq [
+      ["54", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["53", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["52", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["51", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["50", "タスク", "中", "ゴリラ顔のマドンナ"]
+    ]
 
-      click_link t('3')
-      expect(header).to have_content t('title_index', title: Task.model_name.human)
-      data = parse_data
-      expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
+    click_link 3
+    expect(header).to have_content t('title_index', title: Task.model_name.human)
+    data = parse_data
+    expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq [
+      ["44", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["43", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["42", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["41", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["40", "タスク", "中", "ゴリラ顔のマドンナ"]
+    ]
 
-      click_link t('6')
-      expect(header).to have_content t('title_index', title: Task.model_name.human)
-      data = parse_data
-      expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
+    click_link 6
+    expect(header).to have_content t('title_index', title: Task.model_name.human)
+    data = parse_data
+    expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq [
+      ["29", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["28", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["27", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["26", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["25", "タスク", "中", "ゴリラ顔のマドンナ"]
+    ]
 
-      click_link t('2')
-      expect(header).to have_content t('title_index', title: Task.model_name.human)
-      data = parse_data
-      expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
+    click_link 2
+    expect(header).to have_content t('title_index', title: Task.model_name.human)
+    data = parse_data
+    expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq [
+      ["49", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["48", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["47", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["46", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["45", "タスク", "中", "ゴリラ顔のマドンナ"]
+    ]
 
-      click_link t('pagination.next')
-      expect(header).to have_content t('title_index', title: Task.model_name.human)
-      data = parse_data
-      expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
+    click_link t('pagination.next')
+    expect(header).to have_content t('title_index', title: Task.model_name.human)
+    data = parse_data
+    expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq [
+      ["44", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["43", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["42", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["41", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["40", "タスク", "中", "ゴリラ顔のマドンナ"]
+    ]
 
-      click_link t('pagination..previous')
-      expect(header).to have_content t('title_index', title: Task.model_name.human)
-      data = parse_data
-      expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
+    click_link t('pagination..previous')
+    expect(header).to have_content t('title_index', title: Task.model_name.human)
+    data = parse_data
+    expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq [
+      ["49", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["48", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["47", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["46", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["45", "タスク", "中", "ゴリラ顔のマドンナ"]
+    ]
 
-      click_link t('pagination.first')
-      expect(header).to have_content t('title_index', title: Task.model_name.human)
-      data = parse_data
-      expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
+    click_link t('pagination.first')
+    expect(header).to have_content t('title_index', title: Task.model_name.human)
+    data = parse_data
+    expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq [
+      ["54", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["53", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["52", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["51", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["50", "タスク", "中", "ゴリラ顔のマドンナ"]
+    ]
 
-      click_link t('pagination.last')
-      expect(header).to have_content t('title_index', title: Task.model_name.human)
-      data = parse_data
-      expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq records[e[0]]
-    end
+    click_link t('pagination.last')
+    expect(header).to have_content t('title_index', title: Task.model_name.human)
+    data = parse_data
+    expect(data.map { |e| [e[0], e[1], e[3], e[4]] }).to eq [
+      ["4", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["3", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["2", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["1", "タスク", "中", "ゴリラ顔のマドンナ"],
+      ["0", "タスク", "中", "ゴリラ顔のマドンナ"]
+    ]
   end
 end
