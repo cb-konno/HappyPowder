@@ -6,9 +6,6 @@ class TasksController < ApplicationController
   before_action :user_find_all, only: [:new, :create, :edit, :update]
 
   def index
-  #   params[:q] = { user_id_eq: current_user.id} if logged_in
-
-    # params[:q][:user_id_eq] =current_user.id if logged_in
     if params[:q].present?
       params[:q][:user_id_eq] = current_user.id if logged_in
     else
