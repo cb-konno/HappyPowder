@@ -149,9 +149,6 @@ end
 RSpec.feature 'タスク一覧のソートをテスト', type: :feature do
   background do
     login
-    # User.create!(id: 1, name: 'ウマ面のプリンセス', mail: 'horse@face.com', password: 'hihiiiiin')
-    # User.create!(id: 5, name: 'ゴリラ顔のマドンナ', mail: 'gorira@face.com', password: 'uhouhouho')
-    # User.create!(id: 9, name: 'サル顔の貴公子', mail: 'monkey@face.com', password: 'ukyaukyaukya')
     Task.create!(
       id: 1,
       name: '明治のタスク',

@@ -71,6 +71,7 @@ ja:
     new: '新規作成'
     edit: '更新'
     search: '検索'
+    login: 'ログイン'
 
   task:
     status:
