@@ -9,10 +9,10 @@ class SessionsController < ApplicationController
     user = User.find_by(mail: mail)
     if user && user.authenticate(password)
       login user
-      flash[:success] = 'Welcome ' + user.name
+      remember user
       redirect_to user
     else
-      flash[:failed] = 'メールアドレスとパスワードを確認してください。'
+      flash[:failed] = t('login.failed')
       render 'new'
     end
   end

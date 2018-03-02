@@ -74,6 +74,6 @@ class TasksController < ApplicationController
     end
 
     def user_find_all
-      @users = User.ransack(params[:q]).result
+      @users = User.all
     end
 end
