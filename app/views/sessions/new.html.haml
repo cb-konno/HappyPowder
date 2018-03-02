@@ -1,0 +1,22 @@
+%header
+  %h1 ログイン画面
+
+  - if flash[:failed]
+    .flash.failed-message
+      = flash[:failed]
+
+.container
+  = form_for :sessions, url: login_path do |f|
+    .form-group.row
+      .col-2.col-form-label.column
+        = f.label :mail, class: 'control-label'
+      .col-8
+        = f.text_field :mail, class: 'form-control'
+    .form-group.row
+      .col-2.col-form-label.column
+        = f.label :password, class: 'control-label'
+      .col-8
+        = f.password_field :password, class: 'form-control'
+    .form-group
+      .col-10.text-right
+        = f.submit t('submit.login'), class: 'btn btn-primary'

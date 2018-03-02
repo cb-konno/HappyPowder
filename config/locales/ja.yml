@@ -71,6 +71,7 @@ ja:
     new: '新規作成'
     edit: '更新'
     search: '検索'
+    login: 'ログイン'
 
   task:
     status:
@@ -107,6 +108,9 @@ ja:
         created_at: '作成日時'
         updated_at: '更新日時'
         deleted: '削除済'
+
+  login:
+    failed: 'メールアドレスとパスワードを確認してください。'
 
   errors:
     messages:
