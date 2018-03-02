@@ -11,8 +11,8 @@ module SessionsHelper
   end
 
   #ログイン中判定メソッド
-  def logged_in
-    !current_user.nil?
+  def logged_in?
+    current_user.present?
   end
 
 

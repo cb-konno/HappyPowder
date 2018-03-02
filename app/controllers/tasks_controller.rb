@@ -7,9 +7,9 @@ class TasksController < ApplicationController
 
   def index
     if params[:q].present?
-      params[:q][:user_id_eq] = current_user.id if logged_in
+      params[:q][:user_id_eq] = current_user.id
     else
-      params[:q] = { user_id_eq: current_user.id } if logged_in
+      params[:q] = { user_id_eq: current_user.id }
     end
 
     @q = Task.ransack_with_check_params(params)
@@ -62,7 +62,7 @@ class TasksController < ApplicationController
 
   private
     def authenticate
-      redirect_to login_path unless logged_in
+      redirect_to login_path unless logged_in?
     end
 
     def task_find
